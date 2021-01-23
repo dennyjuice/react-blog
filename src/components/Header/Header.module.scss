@@ -1,0 +1,31 @@
+@import '../../helpers/_variables.scss';
+
+header {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  padding: 16px 22px;
+  background-color: #ffffff;
+  color: $heading-color;
+  z-index: 1000;
+}
+
+.title {
+  flex-grow: 1;
+}
+
+.signIn, .signUp {
+  font-size: 18px;
+  padding: 0 20px;
+  border: none;
+  background-color: inherit;
+}
+
+.signUp {
+  color: $success-color;
+  border: 1px solid $success-color;
+  border-radius: 5px;
+}

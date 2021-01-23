@@ -1,8 +1,17 @@
 import React from 'react';
-import classes from './App.module.scss';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-function App() {
-  return <div className={classes.app}>Hello</div>;
-}
+import './App.module.scss';
+
+import Header from '../Header';
+import ArticlesPage from '../pages/ArticlesPage';
+
+const App = () => (
+  <BrowserRouter>
+    <Header />
+
+    <Route path={['/', '/articles']} component={ArticlesPage} />
+  </BrowserRouter>
+);
 
 export default App;
