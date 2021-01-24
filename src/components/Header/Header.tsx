@@ -4,7 +4,7 @@ import classes from './Header.module.scss';
 const Header = () => (
   <header>
     <div className={classes.title}>
-      <h6>Blog</h6>
+      <h1>Blog</h1>
     </div>
     <button type="button" className={classes.signIn}>
       Sign In

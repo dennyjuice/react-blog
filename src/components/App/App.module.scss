@@ -10,12 +10,25 @@ body {
   font-weight: 400;
 }
 
-h6 {
+h1 {
   font-size: 18px;
   line-height: 28px;
   margin: 10px 0;
 }
 
+h2 {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: inherit;
+}
+
 button {
   cursor: pointer;
+}
+
+.container {
+  width: 70%;
+  margin: 106px auto 0;
+  padding: 0;
+  max-width: 938px;
 }
