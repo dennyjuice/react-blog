@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import classes from './ArticleItem.module.scss';
 
-const ArticleItem = ({ children }: any) => (
+const ArticleItem: React.FC = ({ children }) => (
   <div className={`${classes.article} ${children ? classes['vh-80'] : ''}`}>
     <div className={classes.header}>
       <h2>{!children ? <Link to="/articles/test">Some article title</Link> : 'Some article title'}</h2>
@@ -24,7 +24,7 @@ const ArticleItem = ({ children }: any) => (
     <p className={`${classes.text} ${children ? classes.fullArticle : ''}`}>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
       magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat.{' '}
+      consequat.
     </p>
     {children}
   </div>

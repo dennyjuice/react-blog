@@ -1,0 +1,27 @@
+@import "../../../helpers/_variables.scss";
+
+.pagination{
+  padding: 15px 0 40px;
+  list-style-type: none;
+  text-align: center;
+  & .pageItem {
+    display: inline-block;
+    //padding: 10px 18px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+  }
+  & a {
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 40px;
+    color: #222;
+  }
+  & .isActive a {
+    color: #fff;
+  }
+  & .isActive {
+    background-color: $primary-color;
+    border-radius: 100%;
+  }
+}

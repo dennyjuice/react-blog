@@ -4,7 +4,7 @@ import ArticleItem from '../../block/ArticleItem';
 
 import classes from './FullArticlePage.module.scss';
 
-const FullArticlePage = () => (
+const FullArticlePage: React.FC = () => (
   <ArticleItem>
     <div className={classes.fullText}>
       {`Est Ampyciden pater patent
