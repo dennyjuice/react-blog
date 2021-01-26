@@ -20,11 +20,9 @@ const Pagination: React.FC<IPaginationProps> = ({ postsPerPage, postsCount }) =>
         {'<'}
       </a>
       {pageNumbers.map((number: number) => (
-        <li key={number} className={`${classes.pageItem}  ${number === 1 && classes.isActive}`}>
-          <a href="#" className="page-link">
-            {number}
-          </a>
-        </li>
+        <a href="#" key={number} className={`${classes.pageItem}  ${number === 1 && classes.isActive}`}>
+          <li>{number}</li>
+        </a>
       ))}
       <a href="#" className={classes.pageItem}>
         {'>'}
