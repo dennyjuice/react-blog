@@ -1,15 +1,31 @@
 import React from 'react';
 
-import classes from './ArticlesPage.module.scss';
+import ArticleItem from '../../block/ArticleItem';
+import Pagination from '../../block/Pagination';
 
-const ArticlesPage = () => (
-  <ul className={classes.articlesList}>
-    <li className={classes.article} />
-    <li className={classes.article} />
-    <li className={classes.article} />
-    <li className={classes.article} />
-    <li className={classes.article} />
-  </ul>
+import './ArticlesPage.module.scss';
+
+const ArticlesPage: React.FC = () => (
+  <>
+    <ul>
+      <li>
+        <ArticleItem />
+      </li>
+      <li>
+        <ArticleItem />
+      </li>
+      <li>
+        <ArticleItem />
+      </li>
+      <li>
+        <ArticleItem />
+      </li>
+      <li>
+        <ArticleItem />
+      </li>
+    </ul>
+    <Pagination postsPerPage={5} postsCount={20} />
+  </>
 );
 
 export default ArticlesPage;
