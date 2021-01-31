@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import classes from './Pagination.module.scss';
 
@@ -7,7 +8,7 @@ interface IPaginationProps {
   postsCount: number;
 }
 
-const Pagination: React.FC<IPaginationProps> = ({ postsPerPage, postsCount }) => {
+const Pagination: React.FC<IPaginationProps> = ({ postsPerPage = 1, postsCount = 1 }) => {
   const pageNumbers: number[] = [];
 
   for (let i = 1; i <= Math.floor(postsCount / postsPerPage); i++) {
@@ -19,12 +20,19 @@ const Pagination: React.FC<IPaginationProps> = ({ postsPerPage, postsCount }) =>
       <a href="#" className={classes.pageItem}>
         {'<'}
       </a>
-      {pageNumbers.map((number: number) => (
-        <li key={number} className={`${classes.pageItem}  ${number === 1 && classes.isActive}`}>
-          <a href="#" className="page-link">
-            {number}
-          </a>
-        </li>
+      {pageNumbers.map((number) => (
+        <NavLink
+          exact
+          to={`/articles/${number === 1 ? '' : number}`}
+          key={number}
+          className={classes.pageItem}
+          activeStyle={{
+            backgroundColor: '#1890FF',
+            color: '#fff',
+          }}
+        >
+          <li>{number}</li>
+        </NavLink>
       ))}
       <a href="#" className={classes.pageItem}>
         {'>'}
