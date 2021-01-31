@@ -57,6 +57,10 @@
   border-radius: 2px;
 }
 
+.author {
+  text-align: right;
+}
+
 .authorName {
   font-size: 18px;
 }
@@ -70,12 +74,14 @@
   height: 46px;
   border-radius: 100%;
   margin-left: 12px;
+  object-fit: cover;
 }
 
 .text {
   margin: 5px 0 10px;
   line-height: 22px;
   padding-right: 20%;
+  flex-basis: 100%;
 }
 
 .text.fullArticle {
