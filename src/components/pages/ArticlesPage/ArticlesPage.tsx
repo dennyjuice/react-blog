@@ -29,7 +29,7 @@ const ArticlesPage: React.FC = () => {
   return (
     !isLoading && (
       <>
-        <ArticlesList articles={articles || []} />
+        <ArticlesList articles={articles} />
         <Pagination postsPerPage={articles.length} postsCount={articlesCount} />
       </>
     )

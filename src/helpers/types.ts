@@ -1,6 +1,21 @@
+export interface IArticle {
+  title: string;
+  slug: string;
+  body: string;
+  createdAt: string;
+  description: string;
+  author: IArticleAuthor;
+  favoritesCount: number;
+}
+
+interface IArticleAuthor {
+  username: string;
+  image: string;
+}
+
 export interface IAction {
   type: string;
-  isLoading: boolean;
+  [propName: string]: any;
 }
 
 export interface ILoadArticlesAction extends IAction {
@@ -9,19 +24,5 @@ export interface ILoadArticlesAction extends IAction {
 }
 
 export interface ILoadFullArticleAction extends IAction {
-  article: IArticle;
-}
-
-export interface IArticle {
-  title: string;
-  slug: string;
-  description: string;
-  createdAt: string;
-  author: IArticleAuthor;
-  favoritesCount: number;
-}
-
-interface IArticleAuthor {
-  username: string;
-  image: string;
+  fullArticle: IArticle;
 }

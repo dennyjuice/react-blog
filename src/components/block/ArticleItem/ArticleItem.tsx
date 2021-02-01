@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getFullArticle } from '../../../redux/actions';
@@ -7,14 +7,14 @@ import { IArticle } from '../../../helpers/types';
 import classes from './ArticleItem.module.scss';
 
 interface IArticleItem {
-  data?: IArticle;
+  data: IArticle;
 }
 
 const ArticleItem: React.FC<IArticleItem> = ({ data, children }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const getArticle = async (event: any, slug: string) => {
+  const getArticle = async (event: SyntheticEvent<HTMLAnchorElement>, slug: string) => {
     event.preventDefault();
     await dispatch(getFullArticle(slug));
     history.push(`/article/${slug}`);
