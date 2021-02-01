@@ -1,5 +1,9 @@
 .fullText {
+  max-width: 100%;
   font-size: 14px;
   line-height: 22px;
   margin-top: 25px;
+  & pre {
+    overflow-x: auto;
+  }
 }
