@@ -1,10 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import classes from './Header.module.scss';
 
 const Header: React.FC = () => (
   <header>
     <div className={classes.title}>
-      <h1>Blog</h1>
+      <h1>
+        <Link to="/">Blog</Link>
+      </h1>
     </div>
     <button type="button" className={classes.signIn}>
       Sign In
