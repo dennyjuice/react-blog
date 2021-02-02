@@ -22,7 +22,6 @@
   display: inline-block;
   margin: 0 12px 4px 0;
   color: $info-color;
-  text-decoration: none;
 }
 
 .header h2 a:hover {
@@ -34,6 +33,16 @@
   align-items: center;
   position: relative;
   top: 1px;
+  background: none;
+  border: none;
+  &:disabled {
+    background: none;
+    border: none;
+    cursor: initial;
+    &::before {
+      opacity: .5;
+    }
+  }
   &::before {
     content: '';
     display: inline-block;

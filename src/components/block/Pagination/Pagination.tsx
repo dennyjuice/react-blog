@@ -4,14 +4,14 @@ import { NavLink } from 'react-router-dom';
 import classes from './Pagination.module.scss';
 
 interface IPaginationProps {
-  postsPerPage: number;
-  postsCount: number;
+  articlesPerPage: number;
+  articlesCount: number;
 }
 
-const Pagination: React.FC<IPaginationProps> = ({ postsPerPage = 1, postsCount = 1 }) => {
+const Pagination: React.FC<IPaginationProps> = ({ articlesPerPage = 1, articlesCount = 1 }) => {
   const pageNumbers: number[] = [];
 
-  for (let i = 1; i <= Math.floor(postsCount / postsPerPage); i++) {
+  for (let i = 1; i <= Math.floor(articlesCount / articlesPerPage); i++) {
     pageNumbers.push(i);
   }
 
