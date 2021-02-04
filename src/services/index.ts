@@ -10,7 +10,7 @@ const fetchData = async (url: string) => {
     const response = await axios(url);
     return response.data;
   } catch (error) {
-    return false;
+    throw new Error(error.response.status);
   } finally {
     NProgress.done();
   }

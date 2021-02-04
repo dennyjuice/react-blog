@@ -1,8 +1,9 @@
 import { IAction } from '../../helpers/types';
-import { FETCHING, LOAD_ARTICLES, LOAD_FULL_ARTICLE } from '../../helpers/constants';
+import { FETCH_ERROR, FETCHING, LOAD_ARTICLES, LOAD_FULL_ARTICLE } from '../../helpers/constants';
 
 const defaultState = {
   isLoading: true,
+  isError: false,
 };
 
 const articles = (state = defaultState, action: IAction) => {
@@ -22,6 +23,11 @@ const articles = (state = defaultState, action: IAction) => {
       return {
         ...state,
         isLoading: action.isLoading,
+      };
+    case FETCH_ERROR:
+      return {
+        ...state,
+        isError: true,
       };
     default:
       return state;

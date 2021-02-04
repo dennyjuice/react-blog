@@ -8,8 +8,12 @@ interface IPaginationProps {
   articlesCount: number;
 }
 
-const Pagination: React.FC<IPaginationProps> = ({ articlesPerPage = 1, articlesCount = 1 }) => {
+const Pagination: React.FC<IPaginationProps> = ({ articlesPerPage, articlesCount }) => {
   const pageNumbers: number[] = [];
+
+  if (!articlesCount) {
+    return null;
+  }
 
   for (let i = 1; i <= Math.floor(articlesCount / articlesPerPage); i++) {
     pageNumbers.push(i);

@@ -2,6 +2,7 @@ export interface IArticle {
   title: string;
   slug: string;
   body: string;
+  tagList: string[];
   createdAt: string;
   description: string;
   author: IArticleAuthor;
@@ -16,6 +17,10 @@ interface IArticleAuthor {
 export interface IAction {
   type: string;
   [propName: string]: any;
+}
+
+export interface IArticleState {
+  articles: ILoadArticlesAction;
 }
 
 export interface ILoadArticlesAction extends IAction {
