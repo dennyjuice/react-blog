@@ -45,6 +45,7 @@ const ArticleItem: React.FC<IArticleItem> = ({ data, children }) => {
           </button>
           <ul className={classes.tags}>
             {data.tagList.map((tag) => (
+              // TODO: add key create function
               <li className={classes.tag} key={Date.now()}>
                 {tag}
               </li>

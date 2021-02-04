@@ -12,6 +12,7 @@ const ArticlesList: React.FC<IArticlesListProps> = ({ articles }) => (
   <>
     <ul>
       {articles.map((el: IArticle) => (
+        // TODO: add key create function
         <li key={el.createdAt}>
           <ArticleItem data={el} />
         </li>
