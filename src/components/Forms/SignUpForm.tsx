@@ -2,22 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import styles from './Forms.module.scss';
+import { ISignUpForm } from '../../helpers/types';
 
-interface ISignUpForm {
-  username: string;
-  email: string;
-  password: string;
-  matchingPassword: string;
-  privacy: boolean;
-}
+import styles from './Forms.module.scss';
 
 const SignUpForm: React.FC = () => {
   const { register, errors, getValues, handleSubmit } = useForm<ISignUpForm>();
 
-  const onSubmit = (data: ISignUpForm) => {
-    console.log(data);
-  };
+  const onSubmit = (data: ISignUpForm) => data;
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>

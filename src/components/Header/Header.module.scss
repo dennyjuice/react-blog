@@ -33,3 +33,25 @@ header {
   background-color: inherit;
 }
 
+.create {
+  padding: 6px 10px;
+  font-size: 14px;
+  align-self: center;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  padding: 0 27px;
+}
+.user img {
+  width: 46px;
+  height: 46px;
+  margin-left: 13px;
+  border-radius: 50%;
+}
+
+.logOut {
+  border: 1px solid $heading-color;
+  border-radius: 5px;
+}

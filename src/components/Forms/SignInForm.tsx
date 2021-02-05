@@ -1,19 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { loginUser } from '../../redux/actions';
+
+import { ISignInForm } from '../../helpers/types';
 
 import styles from './Forms.module.scss';
 
-interface ISignInForm {
-  email: string;
-  password: string;
-}
-
 const SignInForm: React.FC = () => {
   const { register, errors, handleSubmit } = useForm<ISignInForm>();
+  const dispatch = useDispatch();
 
-  const onSubmit = (data: ISignInForm) => {
-    console.log(data);
+  const history = useHistory();
+
+  const onSubmit = async (data: ISignInForm) => {
+    await dispatch(
+      loginUser({
+        user: {
+          email: data.email,
+          password: data.password,
+        },
+      }),
+    );
+    history.push('/');
   };
 
   return (
