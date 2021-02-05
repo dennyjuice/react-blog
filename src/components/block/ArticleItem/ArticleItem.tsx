@@ -18,7 +18,7 @@ const ArticleItem: React.FC<IArticleItem> = ({ data, children }) => {
 
   const createdAt = useMemo(() => formatDate(data.createdAt), [data]);
 
-  const getArticle = useCallback(
+  const getArticleDetails = useCallback(
     async (event: SyntheticEvent<HTMLAnchorElement>, slug: string) => {
       event.preventDefault();
       await dispatch(getFullArticle(slug));
@@ -33,7 +33,7 @@ const ArticleItem: React.FC<IArticleItem> = ({ data, children }) => {
         <div className={classes.header}>
           <h2>
             {!children ? (
-              <a href="" onClick={(event) => getArticle(event, data.slug)}>
+              <a href={`article/${data.slug}`} onClick={(event) => getArticleDetails(event, data.slug)}>
                 {data.title}
               </a>
             ) : (
@@ -44,7 +44,12 @@ const ArticleItem: React.FC<IArticleItem> = ({ data, children }) => {
             {data.favoritesCount}
           </button>
           <ul className={classes.tags}>
-            <li className={classes.tag}>Tag1</li>
+            {data.tagList.map((tag) => (
+              // TODO: add key create function
+              <li className={classes.tag} key={Date.now()}>
+                {tag}
+              </li>
+            ))}
           </ul>
         </div>
         <div className={classes.author}>

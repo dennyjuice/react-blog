@@ -1,8 +1,8 @@
-import { FETCHING, LOAD_ARTICLES, LOAD_FULL_ARTICLE } from '../../helpers/constants';
+import { FETCHING, FETCH_ERROR, LOAD_ARTICLES, LOAD_FULL_ARTICLE } from '../../helpers/constants';
 
-import { fetchData } from '../../services';
+import { authenticate, fetchData } from '../../services';
 
-import { IAction, IArticle } from '../../helpers/types';
+import { IAction, IArticle, IUserState } from '../../helpers/types';
 
 export const loadArticles = (articles: IArticle[]): IAction => ({
   type: LOAD_ARTICLES,
@@ -19,16 +19,32 @@ export const fetching = (isLoading: boolean): IAction => ({
   isLoading,
 });
 
+export const fetchError = (): IAction => ({
+  type: FETCH_ERROR,
+});
+
 export const getArticles = (offset = 0) => async (dispatch: Function) => {
   dispatch(fetching(true));
-  const data = await fetchData(`/articles?offset=${offset}&tag=Markdown`);
+  const data = await fetchData(`/articles?offset=${offset}&tag=Markdown`).catch(() => dispatch(fetchError()));
   dispatch(loadArticles(data));
   dispatch(fetching(false));
 };
 
 export const getFullArticle = (slug: string) => async (dispatch: Function) => {
   dispatch(fetching(true));
-  const data = await fetchData(`/articles/${slug}`);
+  const data = await fetchData(`/articles/${slug}`).catch(() => dispatch(fetchError()));
   dispatch(loadFullArticle(data.article));
   dispatch(fetching(false));
+};
+
+// TODO Разбить на файлы и добавить обработку ошибок
+
+export const login = (user: IUserState) => ({
+  type: 'LOGIN',
+  user,
+});
+
+export const loginUser = (body: any) => async (dispatch: Function) => {
+  const data = await authenticate(body);
+  dispatch(login(data.user));
 };
