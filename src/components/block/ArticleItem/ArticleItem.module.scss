@@ -101,3 +101,15 @@
 .vh-80 {
   min-height: 80vh;
 }
+
+@media (max-width: 575.98px) {
+  .likes {
+    top: 2px;
+  }
+  .authorName {
+    font-size: 16px;
+  }
+  .header h2, .header h2 a {
+    margin-bottom: 0;
+  }
+}
