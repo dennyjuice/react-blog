@@ -7,6 +7,7 @@ import formatDate from '../../../helpers/formatDate';
 
 import classes from './ArticleItem.module.scss';
 import { IArticle } from '../../../types/articles';
+import newId from '../../../helpers/newId';
 
 interface IArticleItem {
   data: IArticle;
@@ -45,8 +46,7 @@ const ArticleItem: React.FC<IArticleItem> = ({ data, children }) => {
           </button>
           <ul className={classes.tags}>
             {data.tagList.map((tag) => (
-              // TODO: add key create function
-              <li className={classes.tag} key={Date.now()}>
+              <li className={classes.tag} key={newId('tag')}>
                 {tag}
               </li>
             ))}
