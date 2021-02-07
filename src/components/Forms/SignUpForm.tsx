@@ -1,15 +1,34 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 
-import { ISignUpForm } from '../../helpers/types';
+import { registerUser } from '../../redux/actions/user';
+import { ISignUpForm } from '../../types/user';
+
+import { EMAIL_VALIDATE_PATTERN } from '../../helpers/constants';
 
 import styles from './Forms.module.scss';
 
 const SignUpForm: React.FC = () => {
   const { register, errors, getValues, handleSubmit } = useForm<ISignUpForm>();
+  const { isFetching } = useTypedSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  const onSubmit = (data: ISignUpForm) => data;
+  const onSubmit = async (data: ISignUpForm) => {
+    await dispatch(
+      registerUser({
+        user: {
+          username: data.username,
+          email: data.email.toLowerCase(),
+          password: data.password,
+        },
+      }),
+    );
+    history.push('/');
+  };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -41,7 +60,7 @@ const SignUpForm: React.FC = () => {
           ref={register({
             required: 'Email is required',
             pattern: {
-              value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+              value: EMAIL_VALIDATE_PATTERN,
               message: 'Invalid email address',
             },
           })}
@@ -102,7 +121,9 @@ const SignUpForm: React.FC = () => {
         {errors.privacy && <span className={styles.error}>{errors.privacy.message}</span>}
       </div>
 
-      <button type="submit">Create</button>
+      <button type="submit" disabled={!!isFetching}>
+        {isFetching ? <span className={styles.loading} /> : 'Create'}
+      </button>
       <span className={styles.link}>
         Already have an account? <Link to="/sign-in">Sign In.</Link>
       </span>

@@ -1,10 +1,10 @@
 import { IArticlesAction, ArticlesActions, IArticlesState } from '../../types/articles';
 
 const defaultState: IArticlesState = {
-  articles: [],
+  articles: null,
   articlesCount: 0,
   fullArticle: null,
-  isLoading: true,
+  isLoading: false,
   isError: false,
 };
 

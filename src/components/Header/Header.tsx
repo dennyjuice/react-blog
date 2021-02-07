@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 import classes from './Header.module.scss';
+import defaultUserImage from '../assets/defuserpic.jpg';
 
 const Header: React.FC = () => {
   const { user, isLogged } = useTypedSelector((state) => state.user);
@@ -24,7 +25,7 @@ const Header: React.FC = () => {
           </Link>
           <Link to="" className={classes.user}>
             <div className={classes.username}>{user.username}</div>
-            <img src={user.image || 'https://pbs.twimg.com/media/EKjCpHhWwAEaE3W.jpg'} alt="" />
+            <img src={user.image || defaultUserImage} alt="" />
           </Link>
           <Link to="" className={classNames(classes.signIn, classes.logOut)}>
             Log Out

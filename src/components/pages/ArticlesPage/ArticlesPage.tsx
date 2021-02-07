@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getArticles } from '../../../redux/actions/articles';
 
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 
 import ArticlesList from '../../ArticlesList';
 import Pagination from '../../block/Pagination';
-
-import { getArticles } from '../../../redux/actions';
 
 import './ArticlesPage.module.scss';
 
@@ -19,12 +18,13 @@ const ArticlesPage: React.FC = () => {
 
   useEffect(() => {
     dispatch(getArticles(page ? page * 10 : 0));
-  }, [page, dispatch]);
+  }, [dispatch, page]);
 
   return (
-    !isLoading && (
+    !isLoading &&
+    articles && (
       <>
-        <ArticlesList articles={articles || []} />
+        <ArticlesList articles={articles} />
         <Pagination articlesPerPage={10} articlesCount={articlesCount} />
       </>
     )
