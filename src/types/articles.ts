@@ -20,7 +20,7 @@ export interface IArticles {
 }
 
 export interface IArticlesState {
-  articles: IArticle[];
+  articles: IArticle[] | null;
   articlesCount: number;
   fullArticle: IArticle | null;
   isLoading: boolean;

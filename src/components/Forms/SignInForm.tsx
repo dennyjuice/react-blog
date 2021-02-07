@@ -1,15 +1,17 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { loginUser } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 
-import { ISignInForm } from '../../helpers/types';
+import { loginUser } from '../../redux/actions/user';
+import { ISignInForm } from '../../types/user';
 
 import styles from './Forms.module.scss';
 
 const SignInForm: React.FC = () => {
   const { register, errors, handleSubmit } = useForm<ISignInForm>();
+  const { isFetching } = useTypedSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -18,7 +20,7 @@ const SignInForm: React.FC = () => {
     await dispatch(
       loginUser({
         user: {
-          email: data.email,
+          email: data.email.toLowerCase(),
           password: data.password,
         },
       }),
@@ -64,7 +66,9 @@ const SignInForm: React.FC = () => {
         {errors.password && <span className={styles.error}>{errors.password.message}</span>}
       </label>
 
-      <button type="submit">Login</button>
+      <button type="submit" disabled={!!isFetching}>
+        {isFetching ? <span className={styles.loading} /> : 'Login'}
+      </button>
       <span className={styles.link}>
         Don’t have an account? <Link to="/sign-up">Sign Up.</Link>
       </span>

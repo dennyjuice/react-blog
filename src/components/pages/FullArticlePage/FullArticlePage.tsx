@@ -3,8 +3,8 @@ import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import { getFullArticle } from '../../../redux/actions/articles';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
-import { getFullArticle } from '../../../redux/actions';
 
 import ArticleItem from '../../block/ArticleItem';
 
@@ -24,7 +24,7 @@ const FullArticlePage: React.FC = () => {
 
   return (
     <>
-      {!isLoading && (
+      {!isLoading && fullArticle && (
         <ArticleItem data={fullArticle}>
           <div className={classes.fullText}>
             <ReactMarkdown allowDangerousHtml>{fullArticle.body}</ReactMarkdown>
