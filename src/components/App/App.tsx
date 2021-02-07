@@ -1,6 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 import classes from './App.module.scss';
 import 'nprogress/nprogress.css';
@@ -12,10 +12,8 @@ import ArticlesPage from '../pages/ArticlesPage';
 import FullArticlePage from '../pages/FullArticlePage';
 import { SignUpForm, SignInForm } from '../Forms';
 
-import { IArticleState } from '../../helpers/types';
-
 const App: React.FC = () => {
-  const isError = useSelector((state: IArticleState) => state.articles.isError);
+  const { isError } = useTypedSelector((state) => state.articles);
 
   return (
     <BrowserRouter>

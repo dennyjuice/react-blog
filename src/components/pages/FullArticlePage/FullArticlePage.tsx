@@ -1,39 +1,33 @@
 import React, { useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
+import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { getFullArticle } from '../../../redux/actions';
 
 import ArticleItem from '../../block/ArticleItem';
 
-import { ILoadFullArticleAction } from '../../../helpers/types';
-
 import classes from './FullArticlePage.module.scss';
 
-interface IFullArticleState {
-  articles: ILoadFullArticleAction;
-}
-
 const FullArticlePage: React.FC = () => {
-  const article = useSelector(({ articles }: IFullArticleState) => articles.fullArticle);
-  const isLoading = useSelector(({ articles }: IFullArticleState) => articles.isLoading);
+  const { isLoading, fullArticle } = useTypedSelector((state) => state.articles);
   const dispatch = useDispatch();
 
   const { slug }: any = useParams();
 
   useEffect(() => {
-    if (!article) {
+    if (!fullArticle) {
       dispatch(getFullArticle(slug));
     }
-  }, [slug, dispatch, article]);
+  }, [slug, dispatch, fullArticle]);
 
   return (
     <>
       {!isLoading && (
-        <ArticleItem data={article}>
+        <ArticleItem data={fullArticle}>
           <div className={classes.fullText}>
-            <ReactMarkdown allowDangerousHtml>{article.body}</ReactMarkdown>
+            <ReactMarkdown allowDangerousHtml>{fullArticle.body}</ReactMarkdown>
           </div>
         </ArticleItem>
       )}

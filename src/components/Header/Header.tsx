@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+
 import classes from './Header.module.scss';
-import { IState, IUserState } from '../../helpers/types';
 
 const Header: React.FC = () => {
-  const user = useSelector<IState>((state) => state.userState) as IUserState;
+  const { user, isLogged } = useTypedSelector((state) => state.user);
 
   return (
     <header>
@@ -17,7 +17,7 @@ const Header: React.FC = () => {
         </h1>
       </div>
 
-      {user.isLogged ? (
+      {isLogged ? (
         <>
           <Link to="" className={classNames(classes.signUp, classes.create)}>
             Create article

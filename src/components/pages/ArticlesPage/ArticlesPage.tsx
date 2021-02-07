@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+
+import { useTypedSelector } from '../../../hooks/useTypedSelector';
 
 import ArticlesList from '../../ArticlesList';
 import Pagination from '../../block/Pagination';
-
-import { IArticleState } from '../../../helpers/types';
 
 import { getArticles } from '../../../redux/actions';
 
 import './ArticlesPage.module.scss';
 
 const ArticlesPage: React.FC = () => {
-  const { articles, articlesCount } = useSelector((state: IArticleState) => state.articles);
-  const isLoading = useSelector((state: IArticleState) => state.articles.isLoading);
+  const { isLoading, articles, articlesCount } = useTypedSelector((state) => state.articles);
   const dispatch = useDispatch();
 
   const { page }: any = useParams();
