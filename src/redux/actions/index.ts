@@ -1,26 +1,25 @@
-import { FETCHING, FETCH_ERROR, LOAD_ARTICLES, LOAD_FULL_ARTICLE } from '../../helpers/constants';
-
 import { authenticate, fetchData } from '../../services';
 
-import { IAction, IArticle, IUserState } from '../../helpers/types';
+import { IArticle, ArticlesActions, IArticles } from '../../types/articles';
+import { IUser } from '../../types/user';
 
-export const loadArticles = (articles: IArticle[]): IAction => ({
-  type: LOAD_ARTICLES,
+export const loadArticles = (articles: IArticles) => ({
+  type: ArticlesActions.LOAD_ARTICLES,
   articles,
 });
 
-export const loadFullArticle = (article: IArticle): IAction => ({
-  type: LOAD_FULL_ARTICLE,
+export const loadFullArticle = (article: IArticle) => ({
+  type: ArticlesActions.LOAD_FULL_ARTICLE,
   article,
 });
 
-export const fetching = (isLoading: boolean): IAction => ({
-  type: FETCHING,
+export const fetching = (isLoading: boolean) => ({
+  type: ArticlesActions.FETCHING,
   isLoading,
 });
 
-export const fetchError = (): IAction => ({
-  type: FETCH_ERROR,
+export const fetchError = () => ({
+  type: ArticlesActions.FETCH_ERROR,
 });
 
 export const getArticles = (offset = 0) => async (dispatch: Function) => {
@@ -39,12 +38,12 @@ export const getFullArticle = (slug: string) => async (dispatch: Function) => {
 
 // TODO Разбить на файлы и добавить обработку ошибок
 
-export const login = (user: IUserState) => ({
+export const login = (user: IUser) => ({
   type: 'LOGIN',
   user,
 });
 
 export const loginUser = (body: any) => async (dispatch: Function) => {
   const data = await authenticate(body);
-  dispatch(login(data.user));
+  dispatch(login(data));
 };
