@@ -11,7 +11,7 @@ export const fetching = (isFetching: boolean) => ({
   isFetching,
 });
 
-export const fetchError = (error: IError) => ({
+export const fetchUserError = (error: IError) => ({
   type: UserActionTypes.FETCH_ERROR,
   error,
 });
@@ -27,7 +27,7 @@ export const loginUser = (body: ILoginRegister) => async (dispatch: Function) =>
     localStorage.setItem('token', JSON.stringify(data.user.token));
     dispatch(login(data));
   } catch (error) {
-    dispatch(fetchError(error.response.data.errors));
+    dispatch(fetchUserError(error.response.data.errors));
   } finally {
     dispatch(fetching(false));
   }
@@ -40,7 +40,7 @@ export const registerUser = (body: ILoginRegister) => async (dispatch: Function)
     localStorage.setItem('token', JSON.stringify(data.user.token));
     dispatch(login(data));
   } catch (error) {
-    dispatch(fetchError(error.response.data.errors));
+    dispatch(fetchUserError(error.response.data.errors));
   } finally {
     dispatch(fetching(false));
   }
@@ -57,11 +57,12 @@ export const getProfile = () => async (dispatch: Function) => {
 export const updateProfile = (body: ILoginRegister) => async (dispatch: Function) => {
   try {
     dispatch(fetching(true));
+    dispatch(fetchUserError(null));
     const token = localStorage.getItem('token');
     const data = await updateUser(body, token, UserEndPoints.UPDATE);
     dispatch(login(data));
   } catch (error) {
-    dispatch(fetchError(error.response.data.errors));
+    dispatch(fetchUserError(error.response.data.errors));
   } finally {
     dispatch(fetching(false));
   }

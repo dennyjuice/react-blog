@@ -23,7 +23,6 @@ const userReducer = (state = defaultState, action: IUserAction): IUserState => {
     case UserActionTypes.FETCH_ERROR:
       return {
         ...state,
-        isFetching: false,
         error: action.error,
       };
     case UserActionTypes.LOG_OUT:
