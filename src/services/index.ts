@@ -25,3 +25,12 @@ export const authService = async (body: ILoginRegister, endPoint: string) => {
     throw new Error(error.response.status);
   }
 };
+
+export const getUser = async (token: string, endPoint: string) => {
+  try {
+    const response = await axios.get(endPoint, { headers: { Authorization: `Token ${token}` } });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.status);
+  }
+};

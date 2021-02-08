@@ -39,6 +39,7 @@ export enum UserEndPoints {
 export enum UserActionTypes {
   LOGIN = 'LOGIN',
   FETCHING = 'FETCHING',
+  LOG_OUT = 'LOG_OUT',
 }
 
 interface ILoginAction {
@@ -51,4 +52,8 @@ interface IFetchingAction {
   isFetching: boolean;
 }
 
-export type IUserAction = ILoginAction | IFetchingAction;
+interface ILogOutAction {
+  type: UserActionTypes.LOG_OUT;
+}
+
+export type IUserAction = ILoginAction | IFetchingAction | ILogOutAction;

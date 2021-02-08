@@ -1,14 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import classNames from 'classnames';
 
+import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 import classes from './Header.module.scss';
 import defaultUserImage from '../assets/defuserpic.jpg';
+import { getCurrentUser, logOut } from '../../redux/actions/user';
 
 const Header: React.FC = () => {
   const { user, isLogged } = useTypedSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  useEffect(() => {
+    dispatch(getCurrentUser());
+  }, [dispatch]);
+
+  const logOutUser = (event: any) => {
+    event.preventDefault();
+    localStorage.removeItem('token');
+    dispatch(logOut());
+    history.push('/');
+  };
 
   return (
     <header>
@@ -27,9 +42,9 @@ const Header: React.FC = () => {
             <div className={classes.username}>{user.username}</div>
             <img src={user.image || defaultUserImage} alt="" />
           </Link>
-          <Link to="" className={classNames(classes.signIn, classes.logOut)}>
+          <a href="" className={classNames(classes.signIn, classes.logOut)} onClick={(event) => logOutUser(event)}>
             Log Out
-          </Link>
+          </a>
         </>
       ) : (
         <>
