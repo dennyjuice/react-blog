@@ -11,9 +11,6 @@ header {
   background-color: #ffffff;
   color: $heading-color;
   z-index: 1000;
-  & a:visited {
-    color: inherit;
-  }
   & a.signUp {
      color: $success-color;
      border: 1px solid $success-color;
@@ -49,6 +46,10 @@ header {
   height: 46px;
   margin-left: 13px;
   border-radius: 50%;
+}
+
+.username {
+  color: $heading-color;
 }
 
 .logOut {

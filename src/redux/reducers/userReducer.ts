@@ -4,7 +4,7 @@ const defaultState: IUserState = {
   user: null,
   isFetching: false,
   isLogged: false,
-  error: '',
+  error: null,
 };
 
 const userReducer = (state = defaultState, action: IUserAction): IUserState => {
@@ -19,6 +19,16 @@ const userReducer = (state = defaultState, action: IUserAction): IUserState => {
       return {
         ...state,
         isFetching: action.isFetching,
+      };
+    case UserActionTypes.FETCH_ERROR:
+      return {
+        ...state,
+        error: action.error,
+      };
+    case UserActionTypes.LOG_OUT:
+      return {
+        ...state,
+        ...defaultState,
       };
     default:
       return state;

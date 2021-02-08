@@ -17,20 +17,20 @@ export const fetching = (isLoading: boolean) => ({
   isLoading,
 });
 
-export const fetchError = () => ({
+export const fetchArticlesError = () => ({
   type: ArticlesActions.FETCH_ERROR,
 });
 
 export const getArticles = (offset = 0) => async (dispatch: Function) => {
   dispatch(fetching(true));
-  const data = await fetchData(`/articles?offset=${offset}&tag=Markdown`).catch(() => dispatch(fetchError()));
+  const data = await fetchData(`/articles?offset=${offset}&tag=Markdown`).catch(() => dispatch(fetchArticlesError()));
   dispatch(loadArticles(data));
   dispatch(fetching(false));
 };
 
 export const getFullArticle = (slug: string) => async (dispatch: Function) => {
   dispatch(fetching(true));
-  const data = await fetchData(`/articles/${slug}`).catch(() => dispatch(fetchError()));
+  const data = await fetchData(`/articles/${slug}`).catch(() => dispatch(fetchArticlesError()));
   dispatch(loadFullArticle(data.article));
   dispatch(fetching(false));
 };

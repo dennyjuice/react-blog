@@ -1,19 +1,20 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
+// import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 import classes from './App.module.scss';
 import 'nprogress/nprogress.css';
 
 import Header from '../Header';
 import ErrorBoundary from '../ErrorBoundary';
-import ErrorIndicator from '../ErrorBoundary/ErrorIndicator';
+// import ErrorIndicator from '../ErrorBoundary/ErrorIndicator';
 import ArticlesPage from '../pages/ArticlesPage';
 import FullArticlePage from '../pages/FullArticlePage';
-import { SignUpForm, SignInForm } from '../Forms';
+import { SignUpForm, SignInForm, UpdateProfileForm } from '../Forms';
 
+// eslint-disable-next-line arrow-body-style
 const App: React.FC = () => {
-  const { isError } = useTypedSelector((state) => state.articles);
+  // const { isError } = useTypedSelector((state) => state.articles);
 
   return (
     <BrowserRouter>
@@ -26,9 +27,8 @@ const App: React.FC = () => {
 
             <Route path="/sign-up" component={SignUpForm} />
             <Route path="/sign-in" component={SignInForm} />
+            <Route path="/profile" component={UpdateProfileForm} />
           </Switch>
-
-          {isError && <ErrorIndicator />}
         </ErrorBoundary>
       </main>
     </BrowserRouter>
