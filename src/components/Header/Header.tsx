@@ -7,7 +7,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 import classes from './Header.module.scss';
 import defaultUserImage from '../assets/defuserpic.jpg';
-import { getCurrentUser, logOut } from '../../redux/actions/user';
+import { getProfile, logOut } from '../../redux/actions/user';
 
 const Header: React.FC = () => {
   const { user, isLogged } = useTypedSelector((state) => state.user);
@@ -15,7 +15,7 @@ const Header: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(getCurrentUser());
+    dispatch(getProfile());
   }, [dispatch]);
 
   const logOutUser = (event: any) => {
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
           <Link to="" className={classNames(classes.signUp, classes.create)}>
             Create article
           </Link>
-          <Link to="" className={classes.user}>
+          <Link to="/profile" className={classes.user}>
             <div className={classes.username}>{user.username}</div>
             <img src={user.image || defaultUserImage} alt="" />
           </Link>

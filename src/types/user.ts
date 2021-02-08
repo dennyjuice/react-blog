@@ -10,7 +10,14 @@ export interface IUserState {
   user: IUser | null;
   isFetching: boolean;
   isLogged: boolean;
-  error: string | null;
+  error: IError | null;
+}
+
+export interface IError {
+  email?: string;
+  password?: string;
+  username?: string;
+  [propName: string]: string;
 }
 
 export interface ISignInForm {
@@ -26,8 +33,15 @@ export interface ISignUpForm {
   privacy?: boolean;
 }
 
+export interface IUpdateProfileForm {
+  username: string;
+  email: string;
+  password: string;
+  image?: string;
+}
+
 export interface ILoginRegister {
-  user: ISignUpForm | ISignInForm;
+  user: ISignUpForm | ISignInForm | IUpdateProfileForm;
 }
 
 export enum UserEndPoints {
@@ -39,6 +53,7 @@ export enum UserEndPoints {
 export enum UserActionTypes {
   LOGIN = 'LOGIN',
   FETCHING = 'FETCHING',
+  FETCH_ERROR = 'FETCH_ERROR',
   LOG_OUT = 'LOG_OUT',
 }
 
@@ -52,8 +67,13 @@ interface IFetchingAction {
   isFetching: boolean;
 }
 
+interface IFetchErrorAction {
+  type: UserActionTypes.FETCH_ERROR;
+  error: IError;
+}
+
 interface ILogOutAction {
   type: UserActionTypes.LOG_OUT;
 }
 
-export type IUserAction = ILoginAction | IFetchingAction | ILogOutAction;
+export type IUserAction = ILoginAction | IFetchingAction | ILogOutAction | IFetchErrorAction;

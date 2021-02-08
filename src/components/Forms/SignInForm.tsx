@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -7,11 +7,12 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { loginUser } from '../../redux/actions/user';
 import { ISignInForm } from '../../types/user';
 
+import { validationRules } from '../../helpers/constants';
 import styles from './Forms.module.scss';
 
 const SignInForm: React.FC = () => {
   const { register, errors, handleSubmit } = useForm<ISignInForm>();
-  const { isFetching } = useTypedSelector((state) => state.user);
+  const { isFetching, error: serverError, isLogged } = useTypedSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -25,8 +26,13 @@ const SignInForm: React.FC = () => {
         },
       }),
     );
-    history.push('/');
   };
+
+  useEffect(() => {
+    if (isLogged) {
+      history.push('/');
+    }
+  }, [isLogged, history]);
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -34,36 +40,15 @@ const SignInForm: React.FC = () => {
 
       <label>
         Email address
-        <input
-          type="text"
-          name="email"
-          placeholder="Email address"
-          ref={register({
-            required: 'Email is required',
-            pattern: {
-              value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-              message: 'Invalid email address',
-            },
-          })}
-        />
+        <input type="text" name="email" placeholder="Email address" ref={register(validationRules.email)} />
         {errors.email && <span className={styles.error}>{errors.email.message}</span>}
       </label>
 
       <label>
         Password
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          ref={register({
-            required: 'Password is required',
-            validate: {
-              less: (value) => value.length > 7 || 'Password should be at least 8 characters',
-              many: (value) => value.length < 39 || 'Too much characters. Needs to be less than 40.',
-            },
-          })}
-        />
+        <input type="password" name="password" placeholder="Password" ref={register(validationRules.password)} />
         {errors.password && <span className={styles.error}>{errors.password.message}</span>}
+        {serverError && <span className={styles.error}>Email or password is invalid</span>}
       </label>
 
       <button type="submit" disabled={!!isFetching}>

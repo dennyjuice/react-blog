@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -7,13 +7,13 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { registerUser } from '../../redux/actions/user';
 import { ISignUpForm } from '../../types/user';
 
-import { EMAIL_VALIDATE_PATTERN } from '../../helpers/constants';
+import { validationRules } from '../../helpers/constants';
 
 import styles from './Forms.module.scss';
 
 const SignUpForm: React.FC = () => {
   const { register, errors, getValues, handleSubmit } = useForm<ISignUpForm>();
-  const { isFetching } = useTypedSelector((state) => state.user);
+  const { isFetching, error: serverError, isLogged } = useTypedSelector((state) => state.user);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -27,8 +27,13 @@ const SignUpForm: React.FC = () => {
         },
       }),
     );
-    history.push('/');
   };
+
+  useEffect(() => {
+    if (isLogged) {
+      history.push('/');
+    }
+  }, [isLogged, history]);
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -36,53 +41,23 @@ const SignUpForm: React.FC = () => {
 
       <label>
         Username
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          ref={register({
-            required: 'Username is required',
-            validate: {
-              less: (value) => value.length > 2 || 'Username should be at least 3 characters',
-              many: (value) => value.length < 19 || 'Too much characters. Needs to be less than 20.',
-            },
-          })}
-        />
+        <input type="text" name="username" placeholder="Username" ref={register(validationRules.username)} />
         {errors.username && <span className={styles.error}>{errors.username.message}</span>}
+        {serverError && <span className={styles.error}>{serverError.username}</span>}
       </label>
 
       <label>
         Email address
-        <input
-          type="text"
-          name="email"
-          placeholder="Email address"
-          ref={register({
-            required: 'Email is required',
-            pattern: {
-              value: EMAIL_VALIDATE_PATTERN,
-              message: 'Invalid email address',
-            },
-          })}
-        />
+        <input type="text" name="email" placeholder="Email address" ref={register(validationRules.email)} />
         {errors.email && <span className={styles.error}>{errors.email.message}</span>}
+        {serverError && <span className={styles.error}>{serverError.email}</span>}
       </label>
 
       <label>
         Password
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          ref={register({
-            required: 'Password is required',
-            validate: {
-              less: (value) => value.length > 7 || 'Password should be at least 8 characters',
-              many: (value) => value.length < 39 || 'Too much characters. Needs to be less than 40.',
-            },
-          })}
-        />
+        <input type="password" name="password" placeholder="Password" ref={register(validationRules.password)} />
         {errors.password && <span className={styles.error}>{errors.password.message}</span>}
+        {serverError && <span className={styles.error}>{serverError.password}</span>}
       </label>
 
       <label>
@@ -107,16 +82,7 @@ const SignUpForm: React.FC = () => {
       <span className={styles.hr} />
 
       <div className={styles.checkbox}>
-        <input
-          id="privacy"
-          type="checkbox"
-          name="privacy"
-          defaultChecked
-          ref={register({
-            required: 'Please agree with processing',
-            validate: { checked: (value) => value || 'Username should be at least 3 characters' },
-          })}
-        />
+        <input id="privacy" type="checkbox" name="privacy" defaultChecked ref={register(validationRules.privacy)} />
         <label htmlFor="privacy">I agree to the processing of my personal information</label>
         {errors.privacy && <span className={styles.error}>{errors.privacy.message}</span>}
       </div>

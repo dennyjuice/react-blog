@@ -20,6 +20,7 @@ const ArticlesPage: React.FC = () => {
     dispatch(getArticles(page ? page * 10 : 0));
   }, [dispatch, page]);
 
+  // TODO Сменить пагинацию
   return (
     !isLoading &&
     articles && (
