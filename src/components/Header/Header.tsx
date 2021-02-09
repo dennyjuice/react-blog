@@ -8,6 +8,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import classes from './Header.module.scss';
 import defaultUserImage from '../assets/defuserpic.jpg';
 import { getProfile, logOut } from '../../redux/actions/user';
+import { Routes } from '../../helpers/constants';
 
 const Header: React.FC = () => {
   const { user, isLogged } = useTypedSelector((state) => state.user);
@@ -22,23 +23,23 @@ const Header: React.FC = () => {
     event.preventDefault();
     localStorage.removeItem('token');
     dispatch(logOut());
-    history.push('/');
+    history.push(Routes.HOME);
   };
 
   return (
     <header>
       <div className={classes.title}>
         <h1>
-          <Link to="/">JMF Blog</Link>
+          <Link to={Routes.HOME}>JMF Blog</Link>
         </h1>
       </div>
 
       {isLogged ? (
         <>
-          <Link to="" className={classNames(classes.signUp, classes.create)}>
+          <Link to={Routes.NEW_ARTICLE} className={classNames(classes.signUp, classes.create)}>
             Create article
           </Link>
-          <Link to="/profile" className={classes.user}>
+          <Link to={Routes.PROFILE} className={classes.user}>
             <div className={classes.username}>{user.username}</div>
             <img src={user.image || defaultUserImage} alt="" />
           </Link>
@@ -48,10 +49,10 @@ const Header: React.FC = () => {
         </>
       ) : (
         <>
-          <Link to="/sign-in" className={classes.signIn}>
+          <Link to={Routes.SIGN_IN} className={classes.signIn}>
             Sign In
           </Link>
-          <Link to="/sign-up" className={classes.signUp}>
+          <Link to={Routes.SIGN_UP} className={classes.signUp}>
             Sign Up
           </Link>
         </>

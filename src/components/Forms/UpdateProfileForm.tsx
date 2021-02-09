@@ -39,7 +39,7 @@ const UpdateProfileForm = () => {
     }
   }, [isFetching, serverError]);
 
-  const onSubmit = async (data: IUpdateProfileForm) => {
+  const onSubmit = (data: IUpdateProfileForm) => {
     const body = {
       user: {
         username: data.username,
@@ -49,7 +49,7 @@ const UpdateProfileForm = () => {
     };
     if (data.image) body.user.image = data.image;
 
-    await dispatch(updateProfile(body));
+    dispatch(updateProfile(body));
   };
 
   return (

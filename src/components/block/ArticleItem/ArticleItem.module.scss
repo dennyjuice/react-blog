@@ -3,7 +3,6 @@
 .article {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   align-content: flex-start;
   list-style: none;
   margin-bottom: 26px;
@@ -68,15 +67,19 @@
 }
 
 .author {
+  display: flex;
   text-align: right;
 }
 
 .authorName {
+  margin-top: 5px;
   font-size: 18px;
 }
 
 .date {
+  display: block;
   color: $text-color-secondary;
+  font-size: 12px;
 }
 
 .avatar {
@@ -90,8 +93,6 @@
 .text {
   margin: 5px 0 10px;
   line-height: 22px;
-  padding-right: 20%;
-  flex-basis: 100%;
 }
 
 .text.fullArticle {

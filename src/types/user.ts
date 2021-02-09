@@ -33,6 +33,12 @@ export interface ISignUpForm {
   privacy?: boolean;
 }
 
+export interface IEditArticleForm {
+  title: string;
+  description: string;
+  textarea: string;
+}
+
 export interface IUpdateProfileForm {
   username: string;
   email: string;

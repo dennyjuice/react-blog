@@ -22,9 +22,9 @@ const ArticleItem: React.FC<IArticleItem> = ({ data, children }) => {
   const createdAt = useMemo(() => formatDate(data.createdAt), [data]);
 
   const getArticleDetails = useCallback(
-    async (event: SyntheticEvent<HTMLAnchorElement>, slug: string) => {
+    (event: SyntheticEvent<HTMLAnchorElement>, slug: string) => {
       event.preventDefault();
-      await dispatch(getFullArticle(slug));
+      dispatch(getFullArticle(slug));
       history.push(`/article/${slug}`);
     },
     [dispatch, history],
@@ -53,13 +53,17 @@ const ArticleItem: React.FC<IArticleItem> = ({ data, children }) => {
               </li>
             ))}
           </ul>
+          <p className={`${classes.text} ${children ? classes.fullArticle : ''}`}>{data.description}</p>
         </div>
         <div className={classes.author}>
-          <div className={classes.authorName}>{data.author.username}</div>
-          <div className={classes.date}>{createdAt}</div>
+          <div className={classes.authorName}>
+            {data.author.username}
+            <span className={classes.date}>{createdAt}</span>
+          </div>
+
+          <img className={classes.avatar} src={data.author.image || defaultUserImage} alt="" />
         </div>
-        <img className={classes.avatar} src={data.author.image || defaultUserImage} alt="" />
-        <p className={`${classes.text} ${children ? classes.fullArticle : ''}`}>{data.description}</p>
+
         {children}
       </div>
     </>
