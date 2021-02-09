@@ -50,7 +50,7 @@ export const validationRules = {
   title: {
     required: 'Title is required!',
   },
-  desription: {
+  description: {
     required: 'Short description is required!',
   },
   textarea: {

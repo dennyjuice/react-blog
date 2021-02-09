@@ -18,8 +18,8 @@ const UpdateProfileForm = () => {
   useEffect(() => {
     if (user) {
       setValue('username', user.username, { shouldValidate: true });
-      setValue('email', user.email, { shouldValidate: false });
-      setValue('image', user.image, { shouldValidate: false });
+      setValue('email', user.email, { shouldValidate: true });
+      setValue('image', user.image, { shouldValidate: true });
     }
   }, [setValue, user]);
 

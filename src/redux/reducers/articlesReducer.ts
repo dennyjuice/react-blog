@@ -6,6 +6,7 @@ const defaultState: IArticlesState = {
   fullArticle: null,
   isLoading: false,
   isError: false,
+  isSuccess: false,
 };
 
 const articlesReducer = (state = defaultState, action: IArticlesAction) => {
@@ -30,6 +31,11 @@ const articlesReducer = (state = defaultState, action: IArticlesAction) => {
       return {
         ...state,
         isError: true,
+      };
+    case ArticlesActions.SUCCESS_CREATE:
+      return {
+        ...state,
+        isSuccess: action.isSuccess,
       };
     default:
       return state;

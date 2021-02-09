@@ -36,7 +36,8 @@ export interface ISignUpForm {
 export interface IEditArticleForm {
   title: string;
   description: string;
-  textarea: string;
+  body: string;
+  tagList?: string[];
 }
 
 export interface IUpdateProfileForm {
@@ -46,8 +47,9 @@ export interface IUpdateProfileForm {
   image?: string;
 }
 
-export interface ILoginRegister {
-  user: ISignUpForm | ISignInForm | IUpdateProfileForm;
+export interface IForm {
+  user?: ISignUpForm | ISignInForm | IUpdateProfileForm;
+  article?: IEditArticleForm;
 }
 
 export enum UserEndPoints {

@@ -6,11 +6,11 @@ import styles from './LinkButton.module.scss';
 
 interface ILinkButtonProps {
   to: string;
-  classname: string[];
+  classname?: string[];
 }
 
-const LinkButton: React.FC<ILinkButtonProps> = ({ to, classname, children }) => (
-  <Link to={to} className={cn(...classname.map((el) => styles[el]))}>
+const LinkButton: React.FC<ILinkButtonProps> = ({ to, classname = [], children }) => (
+  <Link to={to} className={cn(styles.linkButton, ...classname.map((el) => styles[el]))}>
     {children}
   </Link>
 );

@@ -36,7 +36,7 @@ const Header: React.FC = () => {
 
       {isLogged ? (
         <>
-          <LinkButton to={Routes.NEW_ARTICLE} classname={['signUp', 'create']}>
+          <LinkButton to={Routes.NEW_ARTICLE} classname={['green', 'small']}>
             Create article
           </LinkButton>
           <Link to={Routes.PROFILE} className={styles.user}>
@@ -49,10 +49,8 @@ const Header: React.FC = () => {
         </>
       ) : (
         <>
-          <LinkButton to={Routes.SIGN_IN} classname={['signIn']}>
-            Sign In
-          </LinkButton>
-          <LinkButton to={Routes.SIGN_UP} classname={['signUp']}>
+          <LinkButton to={Routes.SIGN_IN}>Sign In</LinkButton>
+          <LinkButton to={Routes.SIGN_UP} classname={['green']}>
             Sign Up
           </LinkButton>
         </>

@@ -1,22 +1,26 @@
 @import '../../../helpers/_variables.scss';
 
-a {
-   &.signIn, &.signUp {
-        font-size: 18px;
-        padding: 11px 20px;
-        border: none;
-        background-color: inherit;
-    }
+a.linkButton {
+  display: inline-block;
+  font-size: 18px;
+  padding: 11px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: inherit;
 
-    &.signUp {
-        color: $success-color;
-        border: 1px solid $success-color;
-        border-radius: 5px;
-    }
+  &.green {
+    color: $success-color;
+    border: 1px solid $success-color;
+  }
 
-    &.create {
-        padding: 6px 10px;
-        font-size: 14px;
-        align-self: center;
-    } 
+  &.red {
+    color: $error-color;
+    border: 1px solid $error-color;
+  }
+
+  &.small {
+    padding: 6px 18px;
+    font-size: 14px;
+    align-self: center;
+  }
 }

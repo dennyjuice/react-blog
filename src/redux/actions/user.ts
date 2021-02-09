@@ -1,12 +1,12 @@
-import { IError, ILoginRegister, IUser, UserActionTypes, UserEndPoints } from '../../types/user';
-import { authService, getCurrentUser, updateUser } from '../../services';
+import { IError, IForm, IUser, UserActionTypes, UserEndPoints } from '../../types/user';
+import { postFetch, getCurrentUser, updateResource } from '../../services';
 
 export const login = (user: IUser) => ({
   type: UserActionTypes.LOGIN,
   user,
 });
 
-export const fetching = (isFetching: boolean) => ({
+export const sendingForm = (isFetching: boolean) => ({
   type: UserActionTypes.FETCHING,
   isFetching,
 });
@@ -20,29 +20,29 @@ export const logOut = () => ({
   type: UserActionTypes.LOG_OUT,
 });
 
-export const loginUser = (body: ILoginRegister) => async (dispatch: Function) => {
+export const loginUser = (body: IForm) => async (dispatch: Function) => {
   try {
-    dispatch(fetching(true));
-    const data = await authService(body, UserEndPoints.LOGIN);
+    dispatch(sendingForm(true));
+    const data = await postFetch(body, UserEndPoints.LOGIN);
     localStorage.setItem('token', JSON.stringify(data.user.token));
     dispatch(login(data));
   } catch (error) {
     dispatch(fetchUserError(error.response.data.errors));
   } finally {
-    dispatch(fetching(false));
+    dispatch(sendingForm(false));
   }
 };
 
-export const registerUser = (body: ILoginRegister) => async (dispatch: Function) => {
+export const registerUser = (body: IForm) => async (dispatch: Function) => {
   try {
-    dispatch(fetching(true));
-    const data = await authService(body, UserEndPoints.REGISTER);
+    dispatch(sendingForm(true));
+    const data = await postFetch(body, UserEndPoints.REGISTER);
     localStorage.setItem('token', JSON.stringify(data.user.token));
     dispatch(login(data));
   } catch (error) {
     dispatch(fetchUserError(error.response.data.errors));
   } finally {
-    dispatch(fetching(false));
+    dispatch(sendingForm(false));
   }
 };
 
@@ -54,16 +54,16 @@ export const getProfile = () => async (dispatch: Function) => {
   }
 };
 
-export const updateProfile = (body: ILoginRegister) => async (dispatch: Function) => {
+export const updateProfile = (body: IForm) => async (dispatch: Function) => {
   try {
-    dispatch(fetching(true));
+    dispatch(sendingForm(true));
     dispatch(fetchUserError(null));
     const token = localStorage.getItem('token');
-    const data = await updateUser(body, token, UserEndPoints.UPDATE);
+    const data = await updateResource(body, token, UserEndPoints.UPDATE);
     dispatch(login(data));
   } catch (error) {
     dispatch(fetchUserError(error.response.data.errors));
   } finally {
-    dispatch(fetching(false));
+    dispatch(sendingForm(false));
   }
 };

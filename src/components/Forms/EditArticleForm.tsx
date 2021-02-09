@@ -1,30 +1,53 @@
-import React from 'react';
-// import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-// import { useParams } from 'react-router-dom';
+
 import cn from 'classnames';
 
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-// import { getFullArticle } from '../../redux/actions/articles';
 import { validationRules } from '../../helpers/constants';
 import { IEditArticleForm } from '../../types/user';
 
 import styles from './Forms.module.scss';
+import { createArticle, getFullArticle, successCreate, updateArticle } from '../../redux/actions/articles';
 
-const EditArticleForm: React.FC = () => {
-  const { isLoading } = useTypedSelector((state) => state.articles);
-  const { register, handleSubmit, errors } = useForm<IEditArticleForm>();
-  // const dispatch = useDispatch();
+const EditArticleForm: React.FC<{ edit?: boolean; slug: string }> = ({ edit, slug }) => {
+  const { isLoading, fullArticle, isSuccess } = useTypedSelector((state) => state.articles);
+  const { register, handleSubmit, errors, setValue } = useForm<IEditArticleForm>();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  // const { slug }: any = useParams();
+  useEffect(() => {
+    if (edit && fullArticle) {
+      setValue('title', fullArticle.title, { shouldValidate: true });
+      setValue('description', fullArticle.description, { shouldValidate: true });
+      setValue('body', fullArticle.body, { shouldValidate: true });
+    }
+    if (edit && !fullArticle) {
+      dispatch(getFullArticle(slug));
+    }
+  }, [dispatch, edit, fullArticle, setValue, slug]);
 
-  // useEffect(() => {
-  //   if (!fullArticle) {
-  //     dispatch(getFullArticle(slug));
-  //   }
-  // }, [slug, dispatch, fullArticle]);
+  useEffect(() => {
+    if (isSuccess) {
+      history.push(`/article/${fullArticle.slug}`);
+      dispatch(successCreate(false));
+    }
+  }, [dispatch, fullArticle, history, isSuccess]);
 
-  const onSubmit = () => {};
+  const onSubmit = (data: IEditArticleForm) => {
+    const body = {
+      article: {
+        title: data.title,
+        description: data.description,
+        body: data.body,
+      } as IEditArticleForm,
+    };
+
+    if (!edit) dispatch(createArticle(body));
+    if (edit) dispatch(updateArticle(body, slug));
+  };
 
   return (
     <form className={cn(styles.form, styles.editArticle)} onSubmit={handleSubmit(onSubmit)}>
@@ -34,7 +57,6 @@ const EditArticleForm: React.FC = () => {
         Title
         <input type="text" name="title" placeholder="Title" ref={register(validationRules.title)} />
         {errors.title && <span className={styles.error}>{errors.title.message}</span>}
-        {/* {serverError && <span className={styles.error}>{serverError.title}</span>} */}
       </label>
 
       <label>
@@ -43,21 +65,14 @@ const EditArticleForm: React.FC = () => {
           type="text"
           name="description"
           placeholder="Short description"
-          ref={register(validationRules.desription)}
+          ref={register(validationRules.description)}
         />
         {errors.description && <span className={styles.error}>{errors.description.message}</span>}
-        {/* {serverError && <span className={styles.error}>{serverError.description}</span>} */}
       </label>
 
       <label htmlFor="textarea">Text</label>
-      <textarea
-        className={styles.flexGrow}
-        name="textarea"
-        placeholder="Text"
-        ref={register(validationRules.textarea)}
-      />
-      {errors.textarea && <span className={styles.error}>{errors.textarea.message}</span>}
-      {/* {serverError && <span className={styles.error}>{serverError.textarea}</span>} */}
+      <textarea className={styles.flexGrow} name="body" placeholder="Text" ref={register(validationRules.textarea)} />
+      {errors.body && <span className={styles.error}>{errors.body.message}</span>}
 
       <button type="submit" disabled={!!isLoading}>
         {isLoading ? <span className={styles.loading} /> : 'Send'}
