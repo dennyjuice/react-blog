@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import classNames from 'classnames';
 
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 
-import classes from './Header.module.scss';
+import styles from './Header.module.scss';
 import defaultUserImage from '../assets/defuserpic.jpg';
 import { getProfile, logOut } from '../../redux/actions/user';
 import { Routes } from '../../helpers/constants';
+import LinkButton from '../block/LinkButton';
 
 const Header: React.FC = () => {
   const { user, isLogged } = useTypedSelector((state) => state.user);
@@ -28,7 +28,7 @@ const Header: React.FC = () => {
 
   return (
     <header>
-      <div className={classes.title}>
+      <div className={styles.title}>
         <h1>
           <Link to={Routes.HOME}>JMF Blog</Link>
         </h1>
@@ -36,25 +36,25 @@ const Header: React.FC = () => {
 
       {isLogged ? (
         <>
-          <Link to={Routes.NEW_ARTICLE} className={classNames(classes.signUp, classes.create)}>
+          <LinkButton to={Routes.NEW_ARTICLE} classname={['signUp', 'create']}>
             Create article
-          </Link>
-          <Link to={Routes.PROFILE} className={classes.user}>
-            <div className={classes.username}>{user.username}</div>
+          </LinkButton>
+          <Link to={Routes.PROFILE} className={styles.user}>
+            <div className={styles.username}>{user.username}</div>
             <img src={user.image || defaultUserImage} alt="" />
           </Link>
-          <a href="" className={classNames(classes.signIn, classes.logOut)} onClick={(event) => logOutUser(event)}>
+          <a href="" className={styles.logOut} onClick={(event) => logOutUser(event)}>
             Log Out
           </a>
         </>
       ) : (
         <>
-          <Link to={Routes.SIGN_IN} className={classes.signIn}>
+          <LinkButton to={Routes.SIGN_IN} classname={['signIn']}>
             Sign In
-          </Link>
-          <Link to={Routes.SIGN_UP} className={classes.signUp}>
+          </LinkButton>
+          <LinkButton to={Routes.SIGN_UP} classname={['signUp']}>
             Sign Up
-          </Link>
+          </LinkButton>
         </>
       )}
     </header>
