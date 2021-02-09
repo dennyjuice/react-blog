@@ -7,7 +7,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { loginUser } from '../../redux/actions/user';
 import { ISignInForm } from '../../types/user';
 
-import { validationRules } from '../../helpers/constants';
+import { Routes, validationRules } from '../../helpers/constants';
 import styles from './Forms.module.scss';
 
 const SignInForm: React.FC = () => {
@@ -17,8 +17,8 @@ const SignInForm: React.FC = () => {
 
   const history = useHistory();
 
-  const onSubmit = async (data: ISignInForm) => {
-    await dispatch(
+  const onSubmit = (data: ISignInForm) => {
+    dispatch(
       loginUser({
         user: {
           email: data.email.toLowerCase(),
@@ -30,7 +30,7 @@ const SignInForm: React.FC = () => {
 
   useEffect(() => {
     if (isLogged) {
-      history.push('/');
+      history.push(Routes.HOME);
     }
   }, [isLogged, history]);
 
@@ -55,7 +55,7 @@ const SignInForm: React.FC = () => {
         {isFetching ? <span className={styles.loading} /> : 'Login'}
       </button>
       <span className={styles.link}>
-        Don’t have an account? <Link to="/sign-up">Sign Up.</Link>
+        Don’t have an account? <Link to={Routes.SIGN_UP}>Sign Up.</Link>
       </span>
     </form>
   );

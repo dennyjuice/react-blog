@@ -25,6 +25,7 @@ export interface IArticlesState {
   fullArticle: IArticle | null;
   isLoading: boolean;
   isError: boolean;
+  isSuccess: boolean;
 }
 
 export enum ArticlesActions {
@@ -32,6 +33,7 @@ export enum ArticlesActions {
   LOAD_FULL_ARTICLE = 'LOAD_FULL_ARTICLE',
   FETCHING = 'FETCHING',
   FETCH_ERROR = 'FETCH_ERROR',
+  SUCCESS_CREATE = 'SUCCESS_CREATE',
 }
 
 interface ILoadArticlesAction {
@@ -53,4 +55,14 @@ interface IFetchErrorAction {
   type: ArticlesActions.FETCH_ERROR;
 }
 
-export type IArticlesAction = ILoadArticlesAction | ILoadFullArticleAction | IFetchingAction | IFetchErrorAction;
+interface ISuccessCreate {
+  type: ArticlesActions.SUCCESS_CREATE;
+  isSuccess: boolean;
+}
+
+export type IArticlesAction =
+  | ILoadArticlesAction
+  | ILoadFullArticleAction
+  | IFetchingAction
+  | IFetchErrorAction
+  | ISuccessCreate;

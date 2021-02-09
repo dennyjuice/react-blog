@@ -18,8 +18,8 @@ const UpdateProfileForm = () => {
   useEffect(() => {
     if (user) {
       setValue('username', user.username, { shouldValidate: true });
-      setValue('email', user.email, { shouldValidate: false });
-      setValue('image', user.image, { shouldValidate: false });
+      setValue('email', user.email, { shouldValidate: true });
+      setValue('image', user.image, { shouldValidate: true });
     }
   }, [setValue, user]);
 
@@ -39,7 +39,7 @@ const UpdateProfileForm = () => {
     }
   }, [isFetching, serverError]);
 
-  const onSubmit = async (data: IUpdateProfileForm) => {
+  const onSubmit = (data: IUpdateProfileForm) => {
     const body = {
       user: {
         username: data.username,
@@ -49,7 +49,7 @@ const UpdateProfileForm = () => {
     };
     if (data.image) body.user.image = data.image;
 
-    await dispatch(updateProfile(body));
+    dispatch(updateProfile(body));
   };
 
   return (
