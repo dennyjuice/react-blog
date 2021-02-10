@@ -1,14 +1,15 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import classes from './Pagination.module.scss';
 
 interface IPaginationProps {
   articlesPerPage: number;
   articlesCount: number;
+  page: number;
 }
 
-const Pagination: React.FC<IPaginationProps> = ({ articlesPerPage, articlesCount }) => {
+const Pagination: React.FC<IPaginationProps> = ({ articlesPerPage, articlesCount, page = 1 }) => {
   const pageNumbers: number[] = [];
 
   if (!articlesCount) {
@@ -21,11 +22,11 @@ const Pagination: React.FC<IPaginationProps> = ({ articlesPerPage, articlesCount
 
   return (
     <ul className={classes.pagination}>
-      <a href="#" className={classes.pageItem}>
-        {'<'}
-      </a>
+      <Link to={`/articles/${page > 5 ? +page - 5 : 0}`} className={classes.pageItem}>
+        {'<<'}
+      </Link>
 
-      {pageNumbers.map((number) => (
+      {pageNumbers.slice(page > 6 ? +page - 6 : 0, +page + 5).map((number) => (
         <NavLink
           exact
           to={`/articles/${number === 1 ? '' : number}`}
@@ -40,9 +41,9 @@ const Pagination: React.FC<IPaginationProps> = ({ articlesPerPage, articlesCount
         </NavLink>
       ))}
 
-      <a href="#" className={classes.pageItem}>
-        {'>'}
-      </a>
+      <Link to={`/articles/${+page + 5}`} className={classes.pageItem}>
+        {'>>'}
+      </Link>
     </ul>
   );
 };

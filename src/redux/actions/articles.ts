@@ -30,9 +30,7 @@ export const successCreate = (isSuccess: boolean) => ({
 
 export const getArticles = (offset = 0) => async (dispatch: Function) => {
   dispatch(fetchingArticles(true));
-  const data = await fetchData(`/articles?offset=${offset}&author=dennyjuice`).catch(() =>
-    dispatch(fetchArticlesError()),
-  );
+  const data = await fetchData(`/articles?offset=${offset}`).catch(() => dispatch(fetchArticlesError()));
   dispatch(loadArticles(data));
   dispatch(fetchingArticles(false));
 };
