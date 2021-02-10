@@ -8,7 +8,8 @@ axios.defaults.baseURL = AXIOS_BASE_URL;
 export const fetchData = async (url: string) => {
   try {
     NProgress.start();
-    const response = await axios.get(url);
+    const token = localStorage.getItem('token');
+    const response = await axios.get(url, token ? { headers: { Authorization: `Token ${token}` } } : {});
     return response.data;
   } catch (error) {
     throw new Error(error.response.status);
@@ -17,22 +18,22 @@ export const fetchData = async (url: string) => {
   }
 };
 
-export const postFetch = async (body: IForm, endPoint: string, token: string = '') => {
+export const postFetch = async (body: IForm = {}, endPoint: string, token: string = '') => {
   const response = await axios.post(endPoint, body, token ? { headers: { Authorization: `Token ${token}` } } : {});
   return response.data;
 };
 
-export const getCurrentUser = async (token: string, endPoint: string) => {
+export const getCurrentUser = async (endPoint: string, token: string) => {
   const response = await axios.get(endPoint, { headers: { Authorization: `Token ${token}` } });
   return response.data;
 };
 
-export const updateResource = async (body: IForm, token: string, endPoint: string) => {
+export const updateResource = async (body: IForm, endPoint: string, token: string) => {
   const response = await axios.put(endPoint, body, { headers: { Authorization: `Token ${token}` } });
   return response.data;
 };
 
-export const deleteResource = async (token: string, endPoint: string) => {
+export const deleteResource = async (endPoint: string, token: string) => {
   const response = await axios.delete(endPoint, { headers: { Authorization: `Token ${token}` } });
   return response.data;
 };

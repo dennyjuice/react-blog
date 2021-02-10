@@ -1,0 +1,49 @@
+@import '../../../helpers/_variables.scss';
+
+.modal {
+  margin-top: 36px;
+  position: absolute;
+  right: 0;
+  width: 240px;
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-size: 14px;
+  background-color: #FFFFFF;
+  border: 1px solid #D9D9D9;
+  filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.15));
+  &:after {
+    content: ' ';
+    left: 50%;
+    top: -4px;
+    position: absolute;
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: inherit;
+    border-top: inherit;
+    border-left: inherit;
+    transform: translateX(-50%) rotate(45deg);
+    filter: inherit;
+  }
+  & .exclamation {
+    display: flex;
+    margin-bottom: 12px;
+    & svg {
+      margin: 2px 8px 0 0;
+    }
+  }
+  & a {
+    float: right;
+    padding: 4px 8px;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+  }
+  & .yesButton {
+    border: 1px solid $primary-color;
+    background-color: $primary-color;
+    color: #FFFFFF;
+  }
+  & .noButton {
+    margin-right: 8px;
+  }
+}

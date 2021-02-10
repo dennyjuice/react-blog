@@ -10,7 +10,7 @@ interface ILinkButtonProps {
 }
 
 const LinkButton: React.FC<ILinkButtonProps> = ({ to, classname = [], children }) => (
-  <Link to={to} className={cn(styles.linkButton, ...classname.map((el) => styles[el]))}>
+  <Link to={to} className={cn('hover', styles.linkButton, ...classname.map((el) => styles[el]))}>
     {children}
   </Link>
 );
