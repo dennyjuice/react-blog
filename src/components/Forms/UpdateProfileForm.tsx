@@ -59,27 +59,51 @@ const UpdateProfileForm = () => {
 
         <label>
           Username
-          <input type="text" name="username" placeholder="Username" ref={register(validationRules.username)} />
+          <input
+            className={errors.username ? styles.inputError : ''}
+            type="text"
+            name="username"
+            placeholder="Username"
+            ref={register(validationRules.username)}
+          />
           {errors.username && <span className={styles.error}>{errors.username.message}</span>}
           {serverError && <span className={styles.error}>{serverError.username}</span>}
         </label>
 
         <label>
           Email address
-          <input type="text" name="email" placeholder="Email address" ref={register(validationRules.email)} />
+          <input
+            className={errors.email ? styles.inputError : ''}
+            type="text"
+            name="email"
+            placeholder="Email address"
+            ref={register(validationRules.email)}
+          />
           {errors.email && <span className={styles.error}>{errors.email.message}</span>}
           {serverError && <span className={styles.error}>{serverError.email}</span>}
         </label>
 
         <label>
           New password
-          <input type="password" name="password" placeholder="New password" ref={register(validationRules.password)} />
+          <input
+            className={errors.password ? styles.inputError : ''}
+            type="password"
+            name="password"
+            placeholder="New password"
+            ref={register(validationRules.password)}
+          />
           {errors.password && <span className={styles.error}>{errors.password.message}</span>}
         </label>
 
         <label>
           Avatar image (url)
-          <input type="text" name="image" placeholder="Avatar image" ref={register(validationRules.image)} />
+          <input
+            className={errors.image ? styles.inputError : ''}
+            type="text"
+            name="image"
+            placeholder="Avatar image"
+            ref={register(validationRules.image)}
+          />
           {errors.image && <span className={styles.error}>{errors.image.message}</span>}
         </label>
 

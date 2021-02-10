@@ -38,6 +38,9 @@ $border-color: #D9D9D9;
       border-color: $primary-color;
     }
   }
+  & input.inputError {
+    border: 1px solid $highlight-color;
+  }
   & .checkbox {
     & label {
       display: inline-flex;

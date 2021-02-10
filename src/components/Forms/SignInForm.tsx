@@ -40,13 +40,25 @@ const SignInForm: React.FC = () => {
 
       <label>
         Email address
-        <input type="text" name="email" placeholder="Email address" ref={register(validationRules.email)} />
+        <input
+          className={errors.email ? styles.inputError : ''}
+          type="text"
+          name="email"
+          placeholder="Email address"
+          ref={register(validationRules.email)}
+        />
         {errors.email && <span className={styles.error}>{errors.email.message}</span>}
       </label>
 
       <label>
         Password
-        <input type="password" name="password" placeholder="Password" ref={register(validationRules.password)} />
+        <input
+          className={errors.password ? styles.inputError : ''}
+          type="password"
+          name="password"
+          placeholder="Password"
+          ref={register(validationRules.password)}
+        />
         {errors.password && <span className={styles.error}>{errors.password.message}</span>}
         {serverError && <span className={styles.error}>Email or password is invalid</span>}
       </label>

@@ -8,7 +8,6 @@ import { registerUser } from '../../redux/actions/user';
 import { ISignUpForm } from '../../types/user';
 
 import { Routes, validationRules } from '../../helpers/constants';
-
 import styles from './Forms.module.scss';
 
 const SignUpForm: React.FC = () => {
@@ -41,21 +40,39 @@ const SignUpForm: React.FC = () => {
 
       <label>
         Username
-        <input type="text" name="username" placeholder="Username" ref={register(validationRules.username)} />
+        <input
+          className={errors.username ? styles.inputError : ''}
+          type="text"
+          name="username"
+          placeholder="Username"
+          ref={register(validationRules.username)}
+        />
         {errors.username && <span className={styles.error}>{errors.username.message}</span>}
         {serverError && <span className={styles.error}>{serverError.username}</span>}
       </label>
 
       <label>
         Email address
-        <input type="text" name="email" placeholder="Email address" ref={register(validationRules.email)} />
+        <input
+          className={errors.email ? styles.inputError : ''}
+          type="text"
+          name="email"
+          placeholder="Email address"
+          ref={register(validationRules.email)}
+        />
         {errors.email && <span className={styles.error}>{errors.email.message}</span>}
         {serverError && <span className={styles.error}>{serverError.email}</span>}
       </label>
 
       <label>
         Password
-        <input type="password" name="password" placeholder="Password" ref={register(validationRules.password)} />
+        <input
+          className={errors.password ? styles.inputError : ''}
+          type="password"
+          name="password"
+          placeholder="Password"
+          ref={register(validationRules.password)}
+        />
         {errors.password && <span className={styles.error}>{errors.password.message}</span>}
         {serverError && <span className={styles.error}>{serverError.password}</span>}
       </label>
@@ -63,6 +80,7 @@ const SignUpForm: React.FC = () => {
       <label>
         Repeat Password
         <input
+          className={errors.matchingPassword ? styles.inputError : ''}
           type="password"
           name="matchingPassword"
           placeholder="Repeat Password"
