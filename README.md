@@ -1,3 +1,3 @@
-# Getting Started with Create React App
+# React + Redux Blog
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Working demo --> [REACT-BLOG](https://react-blog-d.vercel.app/).
