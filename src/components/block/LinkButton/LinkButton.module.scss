@@ -3,10 +3,11 @@
 a.linkButton {
   display: inline-block;
   font-size: 18px;
-  padding: 11px 20px;
+  padding: 12px 20px;
   border: none;
   border-radius: 5px;
   background-color: inherit;
+  color: inherit;
 
   &.green {
     color: $success-color;
@@ -22,5 +23,10 @@ a.linkButton {
     padding: 6px 18px;
     font-size: 14px;
     align-self: center;
+  }
+
+  &.signIn {
+    margin-right: 5px;
+    padding-top: 13px;
   }
 }
