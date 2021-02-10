@@ -17,10 +17,8 @@ const FullArticlePage: React.FC = () => {
   const { slug }: any = useParams();
 
   useEffect(() => {
-    if (!fullArticle) {
-      dispatch(getFullArticle(slug));
-    }
-  }, [slug, dispatch, fullArticle]);
+    dispatch(getFullArticle(slug));
+  }, [slug, dispatch]);
 
   return (
     <>
