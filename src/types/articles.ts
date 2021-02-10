@@ -7,6 +7,7 @@ export interface IArticle {
   description: string;
   author: IArticleAuthor;
   favoritesCount: number;
+  favorited: boolean;
 }
 
 interface IArticleAuthor {

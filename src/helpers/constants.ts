@@ -1,5 +1,9 @@
 export const AXIOS_BASE_URL = 'https://conduit.productionready.io/api';
 
+export enum LocalStorage {
+  TOKEN = 'token',
+}
+
 export enum Routes {
   HOME = '/',
   ARTICLES = '/articles',
@@ -10,6 +14,7 @@ export enum Routes {
   SIGN_UP = '/sign-up',
   SIGN_IN = '/sign-in',
   PROFILE = '/profile',
+  FAVORITE = '/favorite',
 }
 
 export const EMAIL_VALIDATE_PATTERN = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;

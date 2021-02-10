@@ -11,24 +11,20 @@ import Pagination from '../../block/Pagination';
 import './ArticlesPage.module.scss';
 
 const ArticlesPage: React.FC = () => {
-  const { isLoading, articles, articlesCount } = useTypedSelector((state) => state.articles);
+  const { articles, articlesCount, isSuccess } = useTypedSelector((state) => state.articles);
   const dispatch = useDispatch();
 
   const { page }: any = useParams();
 
   useEffect(() => {
     dispatch(getArticles(page ? page * 10 : 0));
-  }, [dispatch, page]);
+  }, [dispatch, page, isSuccess]);
 
-  // TODO Сменить пагинацию
   return (
-    !isLoading &&
-    articles && (
-      <>
-        <ArticlesList articles={articles} />
-        <Pagination articlesPerPage={10} articlesCount={articlesCount} page={page} />
-      </>
-    )
+    <>
+      <ArticlesList articles={articles || []} />
+      {articles && <Pagination articlesPerPage={10} articlesCount={articlesCount} page={page} />}
+    </>
   );
 };
 

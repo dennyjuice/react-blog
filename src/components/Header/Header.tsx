@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { SyntheticEvent, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
@@ -19,7 +19,7 @@ const Header: React.FC = () => {
     dispatch(getProfile());
   }, [dispatch]);
 
-  const logOutUser = (event: any) => {
+  const logOutUser = (event: SyntheticEvent<HTMLAnchorElement>): void => {
     event.preventDefault();
     localStorage.removeItem('token');
     dispatch(logOut());
