@@ -11,14 +11,14 @@ import Pagination from '../../block/Pagination';
 import './ArticlesPage.module.scss';
 
 const ArticlesPage: React.FC = () => {
-  const { articles, articlesCount, isSuccess } = useTypedSelector((state) => state.articles);
+  const { articles, articlesCount, isLiked } = useTypedSelector((state) => state.articles);
   const dispatch = useDispatch();
 
   const { page }: any = useParams();
 
   useEffect(() => {
     dispatch(getArticles(page ? page * 10 : 0));
-  }, [dispatch, page, isSuccess]);
+  }, [dispatch, page, isLiked]);
 
   return (
     <>

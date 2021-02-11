@@ -7,7 +7,7 @@ import { useTypedSelector } from '../../../hooks/useTypedSelector';
 
 import LinkButton from '../LinkButton';
 import ModalDelete from '../ModalDelete';
-import { deleteArticle, getFullArticle, likeArticle, successCreate } from '../../../redux/actions/articles';
+import { deleteArticle, getFullArticle, likeArticle, successLiked } from '../../../redux/actions/articles';
 import formatDate from '../../../helpers/formatDate';
 import newId from '../../../helpers/newId';
 
@@ -23,7 +23,7 @@ interface IArticleItem {
 
 const ArticleItem: React.FC<IArticleItem> = ({ data, children }) => {
   const { user, isLogged } = useTypedSelector((state) => state.user);
-  const { isSuccess } = useTypedSelector((state) => state.articles);
+  const { isLiked } = useTypedSelector((state) => state.articles);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -49,7 +49,7 @@ const ArticleItem: React.FC<IArticleItem> = ({ data, children }) => {
   const likeHandle = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
     event.preventDefault();
     await dispatch(likeArticle(data.slug, data.favorited));
-    await dispatch(successCreate(!isSuccess));
+    await dispatch(successLiked(!isLiked));
   };
 
   return (

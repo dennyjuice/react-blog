@@ -27,6 +27,7 @@ export interface IArticlesState {
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
+  isLiked: boolean;
 }
 
 export enum ArticlesActions {
@@ -35,6 +36,7 @@ export enum ArticlesActions {
   FETCHING = 'FETCHING',
   FETCH_ERROR = 'FETCH_ERROR',
   SUCCESS_CREATE = 'SUCCESS_CREATE',
+  SUCCESS_LIKE = 'SUCCESS_LIKE',
 }
 
 interface ILoadArticlesAction {
@@ -61,9 +63,15 @@ interface ISuccessCreate {
   isSuccess: boolean;
 }
 
+interface ISuccessLike {
+  type: ArticlesActions.SUCCESS_LIKE;
+  isLiked: boolean;
+}
+
 export type IArticlesAction =
   | ILoadArticlesAction
   | ILoadFullArticleAction
   | IFetchingAction
   | IFetchErrorAction
-  | ISuccessCreate;
+  | ISuccessCreate
+  | ISuccessLike;

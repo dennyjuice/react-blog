@@ -28,6 +28,11 @@ export const successCreate = (isSuccess: boolean) => ({
   isSuccess,
 });
 
+export const successLiked = (isLiked: boolean) => ({
+  type: ArticlesActions.SUCCESS_LIKE,
+  isLiked,
+});
+
 export const getArticles = (offset = 0) => async (dispatch: Function) => {
   dispatch(fetchingArticles(true));
   const data = await fetchData(`${Routes.ARTICLES}?offset=${offset}`).catch(() => dispatch(fetchArticlesError()));

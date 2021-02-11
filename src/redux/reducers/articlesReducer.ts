@@ -7,6 +7,7 @@ const defaultState: IArticlesState = {
   isLoading: false,
   isError: false,
   isSuccess: false,
+  isLiked: false,
 };
 
 const articlesReducer = (state = defaultState, action: IArticlesAction) => {
@@ -36,6 +37,11 @@ const articlesReducer = (state = defaultState, action: IArticlesAction) => {
       return {
         ...state,
         isSuccess: action.isSuccess,
+      };
+    case ArticlesActions.SUCCESS_LIKE:
+      return {
+        ...state,
+        isLiked: action.isLiked,
       };
     default:
       return state;
