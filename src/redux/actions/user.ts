@@ -50,7 +50,7 @@ export const registerUser = (body: IForm) => async (dispatch: Function) => {
 export const getProfile = () => async (dispatch: Function) => {
   const token = localStorage.getItem(LocalStorage.TOKEN);
   if (token) {
-    const data = await getCurrentUser(UserEndPoints.UPDATE, token);
+    const data = await getCurrentUser(UserEndPoints.UPDATE);
     dispatch(login(data));
   }
 };
@@ -59,8 +59,7 @@ export const updateProfile = (body: IForm) => async (dispatch: Function) => {
   try {
     dispatch(sendingForm(true));
     dispatch(fetchUserError(null));
-    const token = localStorage.getItem(LocalStorage.TOKEN);
-    const data = await updateResource(body, UserEndPoints.UPDATE, token);
+    const data = await updateResource(body, UserEndPoints.UPDATE);
     dispatch(login(data));
   } catch (error) {
     dispatch(fetchUserError(error.response.data.errors));
