@@ -1,4 +1,4 @@
-import { IArticlesAction, ArticlesActions, IArticlesState } from '../../types/articles';
+import { IArticlesAction, ArticlesActions, IArticlesState, IArticle } from '../../types/articles';
 
 const defaultState: IArticlesState = {
   articles: null,
@@ -7,7 +7,7 @@ const defaultState: IArticlesState = {
   isLoading: false,
   isError: false,
   isSuccess: false,
-  isLiked: false,
+  isLiking: false,
 };
 
 const articlesReducer = (state = defaultState, action: IArticlesAction) => {
@@ -38,10 +38,39 @@ const articlesReducer = (state = defaultState, action: IArticlesAction) => {
         ...state,
         isSuccess: action.isSuccess,
       };
-    case ArticlesActions.SUCCESS_LIKE:
+    case ArticlesActions.FETCH_LIKE:
+      if (action.slug && !action.isFull) {
+        const likedItem: IArticle = state.articles.find((el) => el.slug === action.slug);
+        likedItem.favorited = !likedItem.favorited;
+        likedItem.favoritesCount = likedItem.favorited ? likedItem.favoritesCount + 1 : likedItem.favoritesCount - 1;
+        const newStateArticles = state.articles.map((el) => {
+          if (el.slug === likedItem.slug) {
+            return likedItem;
+          }
+          return el;
+        });
+
+        return {
+          ...state,
+          articles: newStateArticles,
+          isLiking: action.isLiking,
+        };
+      }
+
+      if (action.slug && action.isFull) {
+        const likedItem: IArticle = state.fullArticle;
+        likedItem.favorited = !likedItem.favorited;
+        likedItem.favoritesCount = likedItem.favorited ? likedItem.favoritesCount + 1 : likedItem.favoritesCount - 1;
+        return {
+          ...state,
+          fullArticle: { ...state.fullArticle, ...likedItem },
+          isLiking: action.isLiking,
+        };
+      }
+
       return {
         ...state,
-        isLiked: action.isLiked,
+        isLiking: action.isLiking,
       };
     default:
       return state;

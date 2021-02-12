@@ -10,19 +10,19 @@ import ArticleItem from '../../block/ArticleItem';
 import classes from './FullArticlePage.module.scss';
 
 const FullArticlePage: React.FC = () => {
-  const { fullArticle, isLoading, isLiked } = useTypedSelector((state) => state.articles);
+  const { fullArticle, isLoading } = useTypedSelector((state) => state.articles);
   const dispatch = useDispatch();
 
   const { slug }: any = useParams();
 
   useEffect(() => {
     dispatch(getFullArticle(slug));
-  }, [slug, dispatch, isLiked]);
+  }, [slug, dispatch]);
 
   return (
     <>
       {!isLoading && fullArticle && (
-        <ArticleItem data={fullArticle}>
+        <ArticleItem data={fullArticle} isFull>
           <div className={classes.fullText}>
             <ReactMarkdown allowDangerousHtml>{fullArticle.body}</ReactMarkdown>
           </div>

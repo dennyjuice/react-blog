@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import ErrorIndicator from './ErrorIndicator';
+import { RootState } from '../../redux/reducers';
 
-export default class ErrorBoundary extends PureComponent<{}, { hasError: boolean }> {
+class ErrorBoundaryComponent extends PureComponent<any> {
   state = {
     hasError: false,
   };
@@ -12,12 +14,18 @@ export default class ErrorBoundary extends PureComponent<{}, { hasError: boolean
 
   render() {
     const { hasError } = this.state;
-    const { children } = this.props;
+    const { isError, children } = this.props;
 
-    if (hasError) {
+    if (hasError || isError) {
       return <ErrorIndicator />;
     }
 
     return children;
   }
 }
+
+const mapStateToProps = (state: RootState) => ({
+  isError: state.articles.isError,
+});
+
+export default connect(mapStateToProps)(ErrorBoundaryComponent);

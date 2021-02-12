@@ -19,7 +19,7 @@ const Header: React.FC = () => {
     dispatch(getProfile());
   }, [dispatch]);
 
-  const logOutUser = (event: SyntheticEvent<HTMLAnchorElement>): void => {
+  const logOutUser = (event: SyntheticEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     localStorage.removeItem('token');
     dispatch(logOut());

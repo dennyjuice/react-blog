@@ -28,9 +28,11 @@ export const successCreate = (isSuccess: boolean) => ({
   isSuccess,
 });
 
-export const successLiked = (isLiked: boolean) => ({
-  type: ArticlesActions.SUCCESS_LIKE,
-  isLiked,
+export const fetchLike = (isLiking: boolean, slug?: string, isFull?: boolean) => ({
+  type: ArticlesActions.FETCH_LIKE,
+  isLiking,
+  slug,
+  isFull,
 });
 
 export const getArticles = (offset = 0) => async (dispatch: Function) => {
@@ -70,11 +72,16 @@ export const deleteArticle = (slug: string) => async (dispatch: Function) => {
   dispatch(successCreate(true));
 };
 
-export const likeArticle = (slug: string, liked: boolean) => async (dispatch: Function) => {
+export const likeArticle = (slug: string, liked: boolean, isFull = false) => async (dispatch: Function) => {
+  dispatch(fetchLike(true));
   if (!liked) {
-    await postFetch({}, `${Routes.ARTICLES}/${slug}${Routes.FAVORITE}`).catch(() => dispatch(fetchArticlesError()));
+    await postFetch({}, `${Routes.ARTICLES}/${slug}${Routes.FAVORITE}`)
+      .catch(() => dispatch(fetchArticlesError()))
+      .finally(dispatch(fetchLike(false, slug, isFull)));
   }
   if (liked) {
-    await deleteResource(`${Routes.ARTICLES}/${slug}${Routes.FAVORITE}`).catch(() => dispatch(fetchArticlesError()));
+    await deleteResource(`${Routes.ARTICLES}/${slug}${Routes.FAVORITE}`)
+      .catch(() => dispatch(fetchArticlesError()))
+      .finally(dispatch(fetchLike(false, slug, isFull)));
   }
 };

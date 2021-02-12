@@ -38,7 +38,7 @@ $border-color: #D9D9D9;
       border-color: $primary-color;
     }
   }
-  & input.inputError {
+  & input[aria-invalid='true'], input[aria-invalid='true']:focus {
     border: 1px solid $highlight-color;
   }
   & .checkbox {
@@ -84,6 +84,10 @@ $border-color: #D9D9D9;
     border-radius: 4px;
     &:focus {
       outline: none;
+    }
+    &:disabled {
+      filter: opacity(.7);
+      cursor: default;
     }
   }
   & .link {

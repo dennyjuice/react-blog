@@ -13,7 +13,7 @@ export const sendingForm = (isFetching: boolean) => ({
 });
 
 export const fetchUserError = (error: IError) => ({
-  type: UserActionTypes.FETCH_ERROR,
+  type: UserActionTypes.FETCH_USER_ERROR,
   error,
 });
 

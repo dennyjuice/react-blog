@@ -11,12 +11,15 @@ import { Routes, validationRules } from '../../helpers/constants';
 import styles from './Forms.module.scss';
 
 const SignUpForm: React.FC = () => {
-  const { register, errors, getValues, handleSubmit } = useForm<ISignUpForm>();
+  const { register, errors, handleSubmit, watch } = useForm<ISignUpForm>();
+  const { username, email, password } = watch(['username', 'email', 'password']);
+  const privacy = watch('privacy', true);
+
   const { isFetching, error: serverError, isLogged } = useTypedSelector((state) => state.user);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onSubmit = (data: ISignUpForm): void => {
+  const onSubmit = (data: ISignUpForm) => {
     dispatch(
       registerUser({
         user: {
@@ -41,7 +44,7 @@ const SignUpForm: React.FC = () => {
       <label>
         Username
         <input
-          className={errors.username ? styles.inputError : ''}
+          aria-invalid={!!errors.username}
           type="text"
           name="username"
           placeholder="Username"
@@ -54,7 +57,7 @@ const SignUpForm: React.FC = () => {
       <label>
         Email address
         <input
-          className={errors.email ? styles.inputError : ''}
+          aria-invalid={!!errors.email}
           type="text"
           name="email"
           placeholder="Email address"
@@ -67,7 +70,7 @@ const SignUpForm: React.FC = () => {
       <label>
         Password
         <input
-          className={errors.password ? styles.inputError : ''}
+          aria-invalid={!!errors.password}
           type="password"
           name="password"
           placeholder="Password"
@@ -80,17 +83,14 @@ const SignUpForm: React.FC = () => {
       <label>
         Repeat Password
         <input
-          className={errors.matchingPassword ? styles.inputError : ''}
+          aria-invalid={!!errors.matchingPassword}
           type="password"
           name="matchingPassword"
           placeholder="Repeat Password"
           ref={register({
             required: 'Please repeat password',
             validate: {
-              matchesPreviousPassword: (value) => {
-                const { password } = getValues();
-                return password === value || 'Passwords should match!';
-              },
+              matchesPreviousPassword: (value) => password === value || 'Passwords should match!', // const { password } = getValues();
             },
           })}
         />
@@ -105,7 +105,7 @@ const SignUpForm: React.FC = () => {
         {errors.privacy && <span className={styles.error}>{errors.privacy.message}</span>}
       </div>
 
-      <button type="submit" disabled={!!isFetching}>
+      <button type="submit" disabled={!!isFetching || (!username && !email && !password && !privacy)}>
         {isFetching ? <span className={styles.loading} /> : 'Create'}
       </button>
       <span className={styles.link}>

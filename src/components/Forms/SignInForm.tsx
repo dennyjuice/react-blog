@@ -11,13 +11,15 @@ import { Routes, validationRules } from '../../helpers/constants';
 import styles from './Forms.module.scss';
 
 const SignInForm: React.FC = () => {
-  const { register, errors, handleSubmit } = useForm<ISignInForm>();
+  const { register, errors, handleSubmit, watch } = useForm<ISignInForm>();
+  const { email, password } = watch(['email', 'password']);
+
   const { isFetching, error: serverError, isLogged } = useTypedSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const history = useHistory();
 
-  const onSubmit = (data: ISignInForm): void => {
+  const onSubmit = (data: ISignInForm) => {
     dispatch(
       loginUser({
         user: {
@@ -41,7 +43,7 @@ const SignInForm: React.FC = () => {
       <label>
         Email address
         <input
-          className={errors.email ? styles.inputError : ''}
+          aria-invalid={!!errors.email}
           type="text"
           name="email"
           placeholder="Email address"
@@ -53,7 +55,7 @@ const SignInForm: React.FC = () => {
       <label>
         Password
         <input
-          className={errors.password ? styles.inputError : ''}
+          aria-invalid={!!errors.password}
           type="password"
           name="password"
           placeholder="Password"
@@ -63,7 +65,7 @@ const SignInForm: React.FC = () => {
         {serverError && <span className={styles.error}>Email or password is invalid</span>}
       </label>
 
-      <button type="submit" disabled={!!isFetching}>
+      <button type="submit" disabled={!!isFetching || (!email && !password)}>
         {isFetching ? <span className={styles.loading} /> : 'Login'}
       </button>
       <span className={styles.link}>

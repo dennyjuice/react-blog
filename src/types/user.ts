@@ -1,6 +1,4 @@
-export interface IUser {
-  email: string;
-  username: string;
+export interface IUser extends ISignUpForm {
   bio: string;
   image: string | null;
   [propName: string]: any;
@@ -25,12 +23,14 @@ export interface ISignInForm {
   password: string;
 }
 
-export interface ISignUpForm {
+export interface ISignUpForm extends ISignInForm {
   username: string;
-  email: string;
-  password: string;
   matchingPassword?: string;
   privacy?: boolean;
+}
+
+export interface IUpdateProfileForm extends ISignUpForm {
+  image?: string;
 }
 
 export interface IEditArticleForm {
@@ -38,13 +38,6 @@ export interface IEditArticleForm {
   description: string;
   body: string;
   tagList?: string[];
-}
-
-export interface IUpdateProfileForm {
-  username: string;
-  email: string;
-  password: string;
-  image?: string;
 }
 
 export interface IForm {
@@ -61,7 +54,7 @@ export enum UserEndPoints {
 export enum UserActionTypes {
   LOGIN = 'LOGIN',
   FETCHING = 'FETCHING',
-  FETCH_ERROR = 'FETCH_ERROR',
+  FETCH_USER_ERROR = 'FETCH_USER_ERROR',
   LOG_OUT = 'LOG_OUT',
 }
 
@@ -76,7 +69,7 @@ interface IFetchingAction {
 }
 
 interface IFetchErrorAction {
-  type: UserActionTypes.FETCH_ERROR;
+  type: UserActionTypes.FETCH_USER_ERROR;
   error: IError;
 }
 

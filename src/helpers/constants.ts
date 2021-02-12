@@ -42,6 +42,12 @@ export const validationRules = {
       many: (value: string) => value.length < 39 || 'Too much characters. Needs to be less than 40.',
     },
   },
+  passwordNotRequired: {
+    validate: {
+      less: (value: string) => value.length > 7 || value.length < 1 || 'Password should be at least 8 characters',
+      many: (value: string) => value.length < 39 || 'Too much characters. Needs to be less than 40.',
+    },
+  },
   image: {
     pattern: {
       value: IMAGE_URL_VALIDATE_PATTERN,

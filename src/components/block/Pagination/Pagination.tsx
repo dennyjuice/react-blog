@@ -9,6 +9,11 @@ interface IPaginationProps {
   page: number;
 }
 
+const activeStyle = {
+  backgroundColor: '#1890FF',
+  color: '#fff',
+};
+
 const Pagination: React.FC<IPaginationProps> = ({ articlesPerPage, articlesCount, page = 1 }) => {
   const pageNumbers: number[] = [];
 
@@ -22,20 +27,18 @@ const Pagination: React.FC<IPaginationProps> = ({ articlesPerPage, articlesCount
 
   return (
     <ul className={classes.pagination}>
-      <Link to={`/articles/${page > 5 ? +page - 5 : 0}`} className={classes.pageItem}>
+      <Link to={`/articles/${page > 5 ? +page - 5 : ''}`} className={classes.pageItem}>
         {'<<'}
       </Link>
 
       {pageNumbers.slice(page > 6 ? +page - 6 : 0, +page + 5).map((number) => (
         <NavLink
           exact
-          to={`/articles/${number === 1 ? '' : number}`}
+          to={`/articles/${number > 1 ? number : ''}`}
           key={number}
           className={classes.pageItem}
-          activeStyle={{
-            backgroundColor: '#1890FF',
-            color: '#fff',
-          }}
+          style={page === 1 && number === 1 ? activeStyle : {}}
+          activeStyle={activeStyle}
         >
           <li>{number}</li>
         </NavLink>

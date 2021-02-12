@@ -27,30 +27,6 @@
   color: $hover-color;
 }
 
-.likes {
-  display: inline-flex;
-  align-items: center;
-  position: relative;
-  top: 1px;
-  background: none;
-  border: none;
-  &:disabled {
-    background: none;
-    border: none;
-    cursor: initial;
-  }
-  & span {
-    margin-right: 5px;
-  }
-}
-
-.liked {
-  color: #ff1000;
-  & span svg {
-    fill: #ff1000;
-  }
-}
-
 .tags {
   padding: 0;
   margin: 0;

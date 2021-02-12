@@ -25,16 +25,22 @@ const EditArticleForm: React.FC<{ edit?: boolean; slug: string }> = ({ edit, slu
       setValue('description', fullArticle.description, { shouldValidate: true });
       setValue('body', fullArticle.body, { shouldValidate: true });
     }
+  }, [edit, fullArticle, setValue]);
+
+  useEffect(() => {
     if (edit && !fullArticle) {
       dispatch(getFullArticle(slug));
     }
+  }, [edit, fullArticle, dispatch, slug]);
+
+  useEffect(() => {
     if (isSuccess) {
       history.push(`/article/${fullArticle.slug}`);
       dispatch(successCreate(false));
     }
-  }, [dispatch, edit, fullArticle, history, isSuccess, setValue, slug]);
+  }, [dispatch, fullArticle, history, isSuccess]);
 
-  const onSubmit = (data: IEditArticleForm): void => {
+  const onSubmit = (data: IEditArticleForm) => {
     // @ts-ignore
     const tagList = [...new Set(getValues({ nest: true }).tagList)];
     const body = {
@@ -49,11 +55,11 @@ const EditArticleForm: React.FC<{ edit?: boolean; slug: string }> = ({ edit, slu
     if (edit) dispatch(updateArticle(body, slug));
   };
 
-  const addTag = (): void => {
+  const addTag = () => {
     setTagsData(() => [...tagsData, '']);
   };
 
-  const remove = (index: number): void => {
+  const remove = (index: number) => {
     setTagsData(() => [...tagsData.slice(0, index), ...tagsData.slice(index + 1)]);
   };
 
@@ -63,13 +69,20 @@ const EditArticleForm: React.FC<{ edit?: boolean; slug: string }> = ({ edit, slu
 
       <label>
         Title
-        <input type="text" name="title" placeholder="Title" ref={register(validationRules.title)} />
+        <input
+          aria-invalid={!!errors.title}
+          type="text"
+          name="title"
+          placeholder="Title"
+          ref={register(validationRules.title)}
+        />
         {errors.title && <span className={styles.error}>{errors.title.message}</span>}
       </label>
 
       <label>
         Short description
         <input
+          aria-invalid={!!errors.description}
           type="text"
           name="description"
           placeholder="Short description"
