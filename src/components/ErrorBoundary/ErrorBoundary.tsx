@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ErrorIndicator from './ErrorIndicator';
 import { RootState } from '../../redux/reducers';
 
-class ErrorBoundaryComponent extends PureComponent<any> {
+class ErrorBoundaryComponent extends PureComponent<{ isError: boolean; children?: React.ReactElement }> {
   state = {
     hasError: false,
   };
